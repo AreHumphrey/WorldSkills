@@ -1,0 +1,28 @@
+.bottom {
+    margin-top: 70px;
+    background-color: rgb(0, 80, 150);
+    display: flex;
+    justify-content: space-between; 
+}
+
+.ooo {
+    padding: 50px 15px 30px;
+    text-align: center;
+}
+
+.info {
+    text-align: right;
+    padding: 20px 17px 30px;
+}
+
+.ooo p {
+    color: white;
+    font-size: 21px;
+    font-family: Inter;
+}
+
+.info span {
+    color: white;
+    font-size: 16px;
+    font-family: Inter;
+}
