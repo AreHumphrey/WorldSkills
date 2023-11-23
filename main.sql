@@ -2,7 +2,7 @@ Create Table Users
 (
     User_id     int primary key,
     Email       text unique not null check (Email like '%@%.%'),
-    Password    text        not null, -- In sha256 hash!!!
+    Password    text        not null, -- In sha256 hash
     FirstName   text        not null,
     LastName    text        not null,
     Role_id     int references Roles (Role_id),
@@ -39,12 +39,12 @@ Create Table Events
 Create Table Results
 (
     User_id            int primary key,
-    Foreign Key (User_id) References Users (User_id),
     Competition_number int  not null,
     Competition_name   text not null,
     Championship_code  int  not null,
     Mark               float check (0 <= Mark <= 100),
-    Modules            text not null
+    Modules            text not null,
+    Foreign Key (User_id) References Users (User_id)
 );
 
 Create Table Volunteers
@@ -56,7 +56,7 @@ Create Table Volunteers
     Gender       text check (Gender in ('Male', 'Female'))
 );
 
-Create Table Championships
+Create Table Championships --WSI
 (
     Champ_id      int primary key,
     Title         text not null,
@@ -65,4 +65,13 @@ Create Table Championships
     Link          text,
     Address       text,
     Members_count int  not null
+);
+
+Create Table Skills
+(
+    Skill_id int primary key ,
+    Name text unique not null,
+    WSI text not null,
+    Description_RUS text not null,
+    Description_EN text not null
 );
