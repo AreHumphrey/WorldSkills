@@ -13,7 +13,8 @@ namespace Backend.Persistence.Extensions
 		// This is the function that will add the services you will use in this project to the IoC mechanism.
 		public static IServiceCollection AddPersistenceServiceRegistration(this IServiceCollection services, IConfiguration configuration)
 		{
-			services.AddDbContext<ApplicaitonDbContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("SqlConnection")));
+			services.AddDbContext<ApplicaitonDbContext>(opt => opt.UseSqlite(configuration.GetConnectionString("SqlConnection"),
+																			 b => b.MigrationsAssembly("Backend.WebApi")));
 			AddRepositoryToIoC(services, Assembly.GetExecutingAssembly());
 			return services;
 		}

@@ -1,5 +1,6 @@
 using Backend.Application.Extensions;
 using Backend.Infrastructure.Extensions;
+using Backend.Persistence.Context;
 using Backend.Persistence.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

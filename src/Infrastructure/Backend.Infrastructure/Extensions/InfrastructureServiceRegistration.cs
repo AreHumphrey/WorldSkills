@@ -8,8 +8,6 @@ namespace Backend.Infrastructure.Extensions
 		// This is the function that will add the services you will use in this project to the IoC mechanism.
 		public static IServiceCollection AddInfrastructureServiceRegistration(this IServiceCollection services)
 		{
-
-
 			return services;
 		}
 	}

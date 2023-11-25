@@ -1,32 +1,23 @@
 using Backend.Domain.Entities.Common;
+using Backend.Domain.Entities.WorkEntities;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 
 namespace Backend.Persistence.Context
 {
 	public class ApplicaitonDbContext : DbContext
 	{
-		public ApplicaitonDbContext(DbContextOptions options) : base(options)
+		public DbSet<Users> Users { get; set; }
+		public DbSet<Results> Results { get; set; }
+		public DbSet<Roles> Roles { get; set; }
+		public DbSet<Regions> Regions { get; set; }
+		public DbSet<Volunteers> Volunteers { get; set; }
+		public DbSet<Events> Events { get; set; }
+		public DbSet<Skills> Skills { get; set; }
+		public DbSet<Championships> Championships { get; set; }
+		public ApplicaitonDbContext(DbContextOptions<ApplicaitonDbContext> options) : base(options)
 		{
-		}
-
-		// Entityleri db ye kaydederken içerdiði dateTime propertylerini otomatik olarak ekleyen bir metod
-		// Not : Eðer PostgreSql kullanacaksanýz DateTime yerine DateTime.Utc.Now Kullanmanýz gerekiyor
-
-		// A method that automatically adds dateTime properties contained in entities while saving to the database
-		// Note: If you're using PostgreSql, you need to use DateTime.Utc.Now instead of DateTime
-		public async override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-		{
-			var datas = ChangeTracker.Entries<IEntity>();
-			foreach (var data in datas)
-			{
-				_ = data.State switch
-				{
-					EntityState.Added => data.Entity.CreatedDate = DateTime.Now,
-					EntityState.Modified => data.Entity.ModifiedDate = DateTime.Now,
-					_ => DateTime.Now
-				};
-			}
-			return await base.SaveChangesAsync(cancellationToken);
+			Database.EnsureCreated();
 		}
 	}
 }
