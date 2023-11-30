@@ -6,6 +6,7 @@ class ResultsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(
+
         'Результаты',
         style: Theme.of(context).textTheme.headline4,
       ),
