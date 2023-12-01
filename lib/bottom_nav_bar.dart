@@ -40,7 +40,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             left: 0,
             right: 0,
             child: Container(
-              height: 120,
+              height: 100,
               decoration: BoxDecoration(
                 color: Colors.white,
               ),

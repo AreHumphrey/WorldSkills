@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         backgroundColor: Color(0xFFE5E9EA),
       ),
-      home: const BottomNavBar(), // use the BottomNavBar widget from the new file
+      home: const BottomNavBar(),
     );
   }
 }
