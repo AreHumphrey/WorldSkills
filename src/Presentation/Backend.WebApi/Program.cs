@@ -3,7 +3,7 @@ using Backend.Infrastructure.Extensions;
 using Backend.Persistence.Context;
 using Backend.Persistence.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions { WebRootPath = "Views/public" });
 
 // Add services to the container.
 
@@ -26,8 +26,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseStaticFiles();
+app.UseDefaultFiles();
 
 app.Run();

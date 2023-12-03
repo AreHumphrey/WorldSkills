@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Backend.Application.Extensions
 {
@@ -10,5 +11,5 @@ namespace Backend.Application.Extensions
 		{
 			return services;
 		}
-	}
+    }
 }
