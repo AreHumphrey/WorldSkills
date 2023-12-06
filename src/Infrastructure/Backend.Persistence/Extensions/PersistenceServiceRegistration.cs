@@ -1,14 +1,18 @@
 using Backend.Application.Abstractions.Repositories.Common;
 using Backend.Application.Extensions;
 using Backend.Persistence.Context;
+using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using React.AspNet;
 using System.Reflection;
+using JavaScriptEngineSwitcher.ChakraCore;
 
 namespace Backend.Persistence.Extensions
 {
@@ -21,6 +25,7 @@ namespace Backend.Persistence.Extensions
 			services.AddDb(configuration);
             services.AddJwt(configuration);
             services.AddMyCors(configuration);
+            services.AddMyReact();
 
             return services;
 		}
@@ -92,6 +97,17 @@ namespace Backend.Persistence.Extensions
                           .AllowAnyOrigin();
                 })
             );
+
+            return services;
+        }
+
+        private static IServiceCollection AddMyReact(this IServiceCollection services) 
+        {
+            services.AddMemoryCache();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddReact();
+            services.AddJsEngineSwitcher(options => options.DefaultEngineName = ChakraCoreJsEngine.EngineName)
+                .AddChakraCore();
 
             return services;
         }
