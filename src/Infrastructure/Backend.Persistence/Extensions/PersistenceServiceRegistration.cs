@@ -3,8 +3,10 @@ using Backend.Application.Extensions;
 using Backend.Persistence.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
 
@@ -18,6 +20,7 @@ namespace Backend.Persistence.Extensions
 		{
 			services.AddDb(configuration);
             services.AddJwt(configuration);
+            services.AddMyCors(configuration);
 
             return services;
 		}
@@ -27,6 +30,11 @@ namespace Backend.Persistence.Extensions
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
+                    string s = configuration["Jwt:Key"];
+                    if (s == null)
+                        s = "morderboy.ru";
+
+                    Console.WriteLine("Jwt:Key value: {0}", s);
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
@@ -35,8 +43,8 @@ namespace Backend.Persistence.Extensions
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = configuration["Jwt:Issuer"],
                         ValidAudience = configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes
-                        (configuration["Jwt:Key"]))
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            System.Text.Encoding.UTF8.GetBytes(s))
                     };
                 });
 
@@ -71,6 +79,20 @@ namespace Backend.Persistence.Extensions
             services.AddDbContext<ApplicaitonDbContext>(opt => opt.UseSqlite(configuration.GetConnectionString("SqlConnection"),
                                                                              b => b.MigrationsAssembly("Backend.WebApi")));
             AddRepositoryToIoC(services, Assembly.GetExecutingAssembly());
+            return services;
+        }
+
+        private static IServiceCollection AddMyCors(this IServiceCollection services, IConfiguration configuration) 
+        {
+            services.AddCors(options =>
+            options.AddPolicy("AllAllow", policy =>
+                {
+                    policy.AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowAnyOrigin();
+                })
+            );
+
             return services;
         }
 	}

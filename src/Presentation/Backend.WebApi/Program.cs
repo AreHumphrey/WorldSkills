@@ -2,6 +2,8 @@ using Backend.Application.Extensions;
 using Backend.Infrastructure.Extensions;
 using Backend.Persistence.Context;
 using Backend.Persistence.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions { WebRootPath = "Views/public" });
 
@@ -25,6 +27,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllAllow");
 
 app.UseAuthentication();
 

@@ -2,6 +2,7 @@
 using Backend.Persistence.Context;
 using Backend.WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +44,7 @@ namespace Backend.WebApi.Controllers
 			if (user != null) 
 			{
 				var token = Generate(user);
+
 				return Ok(token);
 			}
 
@@ -110,15 +112,15 @@ namespace Backend.WebApi.Controllers
 		[HttpPost]
 		public IActionResult Registration([FromBody] UserRegistration userRegistration) 
 		{
-			string password = Convert.ToHexString(
-				sha256.ComputeHash(Encoding.UTF8.GetBytes(userRegistration.Password)));
 
             var user = _db.Users
-				.Where(a => a.Email == userRegistration.Username && a.Password == password)
+				.Where(a => a.Email == userRegistration.Username)
 				.FirstOrDefault();
 
 			if (user == null) 
 			{
+				string password = Convert.ToHexString(
+					sha256.ComputeHash(Encoding.UTF8.GetBytes(userRegistration.Password)));
 				Roles role = _db.Roles.Find(1);
 				Regions region = _db.Regions.Where(a => a.Name == userRegistration.Region).FirstOrDefault();
                 Users newUser = new Users
