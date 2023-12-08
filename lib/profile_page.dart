@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -74,7 +75,12 @@ class ProfilePage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.email, size: 28, color: Color(0xFF0084AD)),
+                    SvgPicture.asset(
+                      'assets/paroll.svg',
+                      semanticsLabel: 'Password',
+                      width: 32,
+                      height: 32,
+                    ),
                     SizedBox(width: 8),
                     Text(
                       'Изменить почту',

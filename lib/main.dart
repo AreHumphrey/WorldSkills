@@ -3,95 +3,16 @@ import 'package:flutter/rendering.dart';
 import 'bottom_nav_bar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'widgets/CustomButtonLogin_w.dart';
+import 'widgets/CustomButtonRegistration_w.dart';
 
-import 'package:flutter/material.dart';
 
-class CustomButtonLogin extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String text;
-
-  const CustomButtonLogin({
-    Key? key,
-    required this.onPressed,
-    required this.text,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 390.16553,
-      height: 50.31846,
-      decoration: BoxDecoration(
-        color: const Color(0xFF003764),
-        borderRadius: BorderRadius.circular(29.68789),
-      ),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        child: Text(
-          text,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-          ),
-        ),
-        style: ElevatedButton.styleFrom(
-          primary: Colors.transparent,
-          onPrimary: Colors.transparent,
-          onSurface: Colors.transparent,
-          shadowColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(29.68789),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CustomButtonRegistration extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String text;
-
-  const CustomButtonRegistration({
-    Key? key,
-    required this.onPressed,
-    required this.text,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 390.16553,
-      height: 50.31846,
-      decoration: BoxDecoration(
-        color: const Color(0xFFB0183D),
-        borderRadius: BorderRadius.circular(29.68789),
-      ),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        child: Text(
-          text,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-          ),
-        ),
-        style: ElevatedButton.styleFrom(
-          primary: Colors.transparent,
-          onPrimary: Colors.transparent,
-          onSurface: Colors.transparent,
-          shadowColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(29.68789),
-          ),
-        ),
-      ),
-    );
-  }
-}
 void main() {
   runApp(const MyApp());
 }
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -122,19 +43,19 @@ class MyApp extends StatelessWidget {
         ),
         inputDecorationTheme: InputDecorationTheme(
           focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey[800]!),
+            borderSide: BorderSide(color: Colors.black!),
           ),
           enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey[800]!),
+            borderSide: BorderSide(color: Colors.black!),
           ),
         ),
       ),
       home: const LoginScreen(),
     );
   }
-
-
 }
+
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -143,9 +64,12 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
+
+
 class _LoginScreenState extends State<LoginScreen> {
-  late String username;
-  late String password;
+  late String username = ' ';
+  late String password = ' ';
+  bool rememberMe = false;
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +80,6 @@ class _LoginScreenState extends State<LoginScreen> {
           style: TextStyle(fontSize: 24),
         ),
         centerTitle: true,
-
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(8.0),
@@ -164,44 +87,126 @@ class _LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
 
-            SizedBox(height: 170),
-            Container(
-              height: 60,
-              child: TextFormField(
-                style: TextStyle(fontSize: 20),
-                decoration: InputDecoration(
-                  labelText: 'Логин',
-                  prefixIcon: Icon(Icons.person, color: Color(0xFF0084AD)),
-                  contentPadding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
+            Padding(
+              padding: const EdgeInsets.only(top: 0),
+              child: Center(
+                child: Image.asset(
+                  'assets/WS_Logo_DarkBlue_RGB.png',
+                  width: 300,
+                  height: 300,
                 ),
-                onChanged: (value) {
-                  username = value;
-                },
-              ),
-            ),
-            SizedBox(height: 40),
-            Container(
-              height: 60,
-              child: TextFormField(
-                style: TextStyle(fontSize: 20),
-                decoration: InputDecoration(
-                  labelText: 'Пароль',
-                  prefixIcon: Icon(Icons.lock, color: Color(0xFF0084AD)),
-                  contentPadding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
-                ),
-                onChanged: (value) {
-                  password = value;
-                },
               ),
             ),
 
-            SizedBox(height: 72),
+            Center(
+              child: Container(
+                height: 60,
+                width: 380,
+                child: TextFormField(
+                  style: TextStyle(fontSize: 20),
+                  decoration: InputDecoration(
+                    hintText: 'Логин',
+                    hintStyle: TextStyle(fontSize: 20),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: SvgPicture.asset(
+                        'assets/person.svg',
+                        semanticsLabel: 'Person',
+                        width: 40,
+                        height: 40,
+                      ),
+                    ),
+                    contentPadding:
+                        EdgeInsets.only(left: 20, top: 20, bottom: 20),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 1.0),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      username = value;
+                    });
+                  },
+                ),
+              ),
+            ),
+
+            SizedBox(height: 40),
+
+            Center(
+              child: Container(
+                height: 60,
+                width: 380,
+                child: TextFormField(
+                  style: TextStyle(fontSize: 20),
+                  decoration: InputDecoration(
+                    hintText: 'Пароль',
+                    hintStyle: TextStyle(fontSize: 20),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: SvgPicture.asset(
+                        'assets/paroll.svg',
+                        semanticsLabel: 'Password',
+                        width: 40,
+                        height: 40,
+                      ),
+                    ),
+                    contentPadding:
+                        EdgeInsets.only(left: 20, top: 20, bottom: 20),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 1.0),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      password = value;
+                    });
+                  },
+                ),
+              ),
+            ),
+
+            SizedBox(height: 40),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Checkbox(
+                      value: rememberMe,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          rememberMe = value!;
+                        });
+                      },
+                    ),
+                    Text('Запомнить меня', style: TextStyle(fontSize: 18)),
+                  ],
+                ),
+                SizedBox(width: 40),
+                GestureDetector(
+                  onTap: () {},
+                  child: Text(
+                    'Забыли пароль?',
+                    style: TextStyle(fontSize: 18, color: Colors.blue),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 40),
             CustomButtonLogin(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => BottomNavBar()),
-                );
                 _loginUser(username, password);
               },
               text: 'Войти',
@@ -221,14 +226,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Text(
                   'Нет аккаунта? Зарегистрируйтесь!',
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF383838)
-                  ),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF383838)),
                 ),
               ),
             ),
-
           ],
         ),
       ),
@@ -236,8 +239,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
 
-  Future<void> _loginUser(String username, String password) async {
 
+
+  Future<void> _loginUser(String username, String password) async {
     String? result = await ApiService.loginUser(username, password);
     if (result != null) {
       Navigator.pushReplacement(
@@ -245,14 +249,12 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(builder: (context) => BottomNavBar()),
       );
     } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => BottomNavBar()),
-      );
-    }
 
+    }
   }
 }
+
+
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -261,15 +263,17 @@ class RegistrationScreen extends StatefulWidget {
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
+
+
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  late String username;
-  late String password;
-  late String firstName;
-  late String lastName;
-  late String gender = '';
-  late String region = '';
-  late String birthday = '';
-  late String selectedGender = '';
+  String? username = ' ';
+  String? password = ' ';
+  String? firstName = ' ';
+  String? lastName = ' ';
+  String gender = '';
+  String region = '';
+  String birthday = '';
+  String selectedGender = '';
 
   void selectGender(String selectedGender) {
     setState(() {
@@ -301,41 +305,50 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
         centerTitle: true,
       ),
-      body:SingleChildScrollView(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-
             SizedBox(height: 20),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Логин'),
+              decoration: InputDecoration(
+                labelText: 'Логин',
+                labelStyle: TextStyle(fontSize: 18),
+              ),
+              style: TextStyle(fontSize: 18),
               onChanged: (value) {
                 username = value;
               },
             ),
             SizedBox(height: 20),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Имя'),
+              decoration: InputDecoration(
+                labelText: 'Имя',
+                labelStyle: TextStyle(fontSize: 18),
+              ),
+              style: TextStyle(fontSize: 18),
               onChanged: (value) {
-                username = value;
+                firstName = value;
               },
             ),
             SizedBox(height: 20),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Фамилия'),
+              decoration: InputDecoration(
+                labelText: 'Фамилия',
+                labelStyle: TextStyle(fontSize: 18),
+              ),
+              style: TextStyle(fontSize: 18),
               onChanged: (value) {
-                username = value;
+                lastName = value;
               },
             ),
             SizedBox(height: 50),
-
-
             Row(
               children: [
                 Text(
                   'Пол: ',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(width: 20),
                 GestureDetector(
@@ -345,15 +358,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: 20,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: gender == 'male' ? Color(0xFF0084AD) : Colors.white, // Цвет при выборе и изначальный цвет
-                      border: Border.all(color: gender == 'male' ? Colors.transparent : Colors.black), // Установка прозрачной обводки при выборе
+                      color: gender == 'male'
+                          ? Color(0xFF0084AD)
+                          : Color(0xFFE5E9EA),
+                      border: Border.all(
+                          color: gender == 'male'
+                              ? Colors.transparent
+                              : Colors.black),
                     ),
                   ),
                 ),
                 SizedBox(width: 20),
                 Text(
                   'Муж',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(width: 20),
                 GestureDetector(
@@ -363,22 +381,30 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: 20,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: gender == 'female' ? Color(0xFF0084AD) : Colors.white,
-                      border: Border.all(color: gender == 'female' ? Colors.transparent : Colors.black),
+                      color: gender == 'female'
+                          ? Color(0xFF0084AD)
+                          : Color(0xFFE5E9EA),
+                      border: Border.all(
+                          color: gender == 'female'
+                              ? Colors.transparent
+                              : Colors.black),
                     ),
                   ),
                 ),
                 SizedBox(width: 20),
                 Text(
                   'Жен',
-                  style: TextStyle(fontSize: 1),
+                  style: TextStyle(fontSize: 18),
                 ),
               ],
             ),
-
             SizedBox(height: 20),
             TextField(
-              decoration: InputDecoration(labelText: 'Дата рождения'),
+              decoration: InputDecoration(
+                labelText: 'День рождения',
+                labelStyle: TextStyle(fontSize: 18),
+              ),
+              style: TextStyle(fontSize: 18),
               readOnly: true,
               controller: TextEditingController(text: birthday),
               onTap: () async {
@@ -395,30 +421,35 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 }
               },
             ),
-
             SizedBox(height: 20),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Регион'),
+              decoration: InputDecoration(
+                labelText: 'Регион',
+                labelStyle: TextStyle(fontSize: 18),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                ),
+              ),
+              style: TextStyle(fontSize: 18),
               onChanged: (value) {
                 region = value;
               },
             ),
             SizedBox(height: 20),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Пароль'),
+              decoration: InputDecoration(
+                labelText: 'Пароль',
+                labelStyle: TextStyle(fontSize: 18),
+              ),
+              style: TextStyle(fontSize: 18),
               onChanged: (value) {
                 password = value;
               },
             ),
             SizedBox(height: 40),
-
             CustomButtonRegistration(
               onPressed: () {
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => BottomNavBar()),
-                );
                 _registerUser();
               },
               text: 'Зарегистрироваться',
@@ -429,14 +460,33 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
+
   Future<void> _registerUser() async {
     String? result = await ApiService.registerUser(
-        username, password, firstName, lastName, gender, birthday, region);
+      username!,
+      password!,
+      firstName!,
+      lastName!,
+      gender!,
+      birthday!,
+      region!,
+    );
+
+    if (result == 'Ok') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => BottomNavBar()),
+      );
+    } else {
+      Navigator.pop(context);
+    }
   }
 }
 
+
+
 class ApiService {
-  static Future<String?> registerUser(
+  static Future<String> registerUser(
       String username,
       String password,
       String firstName,
@@ -444,32 +494,40 @@ class ApiService {
       String gender,
       String birthday,
       String region) async {
-    final String apiUrl = 'http://serverip/api/registration';
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'username': username,
-        'password': password,
-        'firstName': firstName,
-        'lastName': lastName,
-        'gender': gender,
-        'birthday': birthday,
-        'region': region
-      }),
-    );
+    final String apiUrl = 'http://morderboy.ru/api/registration';
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'username': username,
+          'password': password,
+          'firstName': firstName,
+          'lastName': lastName,
+          'gender': gender,
+          'birthday': birthday,
+          'region': region
+        }),
+      );
 
-    if (response.statusCode == 200) {
-      return 'Ok';
-    } else {
-      return 'BadRequest';
+      if (response.statusCode == 200) {
+        return 'Ok';
+      } else {
+        return 'BadRequest';
+
+      }
+    } on Exception catch (_) {
+
+      rethrow;
     }
   }
 
+
+
   static Future<String?> loginUser(String username, String password) async {
-    final String apiUrl = 'http://serverip/api/login';
+    final String apiUrl = 'http://morderboy.ru/api/login';
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: <String, String>{
@@ -485,8 +543,12 @@ class ApiService {
       var jsonResponse = json.decode(response.body);
       String token = jsonResponse['token'];
       return token;
+
     } else {
       return 'NotFound';
     }
+
   }
+
 }
+

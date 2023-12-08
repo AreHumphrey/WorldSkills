@@ -41,11 +41,17 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   http: ^1.1.2
+  flutter_native_splash: ^2.2.0+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_native_splash:
+  background_image: "assets/background.png"
+  image: assets/logo_b.png
+  android: true
+  ios: true
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -57,18 +63,19 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+
 flutter:
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/paroll.svg
+    - assets/person.svg
+    - assets/mail.svg
+    - assets/blue_logo.svg
+    - assets/WS_Logo_DarkBlue_RGB.png
+    - assets/worldskills_rus_info.jpg
+    - assets/worldskills_info.jpg
+    - assets/world_skills_foto_1.jpg
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - lib/icons/logo_blue.svg
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
