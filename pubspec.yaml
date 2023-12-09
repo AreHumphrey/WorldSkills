@@ -75,6 +75,8 @@ flutter:
     - assets/worldskills_rus_info.jpg
     - assets/worldskills_info.jpg
     - assets/world_skills_foto_1.jpg
+    - assets/worldskills_info_rus_1.jpg
+    - assets/worldskills_info_rus_2.jpg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wordskills/info_pages/world_skills_info_1.dart';
 import 'package:wordskills/info_pages/world_skills_info_2.dart';
+import 'package:wordskills/info_pages/world_skills_info_3.dart';
+
 class WorldSkills_Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -91,7 +93,12 @@ class WorldSkills_Page extends StatelessWidget {
 
 
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WorldSkillsPage_3()),
+                    );
+                  },
                   child: Container(
                     width: 318,
                     height: 112,
@@ -101,7 +108,7 @@ class WorldSkills_Page extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        'Чемпионаты стран WSI',
+                        'История проведения',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,

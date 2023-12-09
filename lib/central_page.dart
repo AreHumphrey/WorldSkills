@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'info_pages/world_skills_info.dart';
+import 'info_pages/wold_skills_rus_info.dart';
 
 class CentralPage extends StatelessWidget {
   @override
@@ -27,7 +28,7 @@ class CentralPage extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => WorldSkills_Page()), // Замените NewPage() на ваш виджет для новой страницы
+                      MaterialPageRoute(builder: (context) => WorldSkills_Page()),
                     );
                   },
                   child: Container(
@@ -85,7 +86,10 @@ class CentralPage extends StatelessWidget {
                 SizedBox(height: 40),
                 GestureDetector(
                   onTap: () {
-
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WorldSkills_Page_Rus()),
+                    );
                   },
                   child: Container(
                     width: 232,
