@@ -1,12 +1,13 @@
 using Backend.Domain.Entities.Common;
 using Backend.Domain.Entities.WorkEntities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 
 namespace Backend.Persistence.Context
 {
-	public class ApplicaitonDbContext : DbContext
-	{
+	public class ApplicaitonDbContext : IdentityDbContext
+    {
 		public DbSet<Users> Users { get; set; }
 		public DbSet<Results> Results { get; set; }
 		public DbSet<Roles> Roles { get; set; }

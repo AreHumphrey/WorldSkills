@@ -1,24 +1,18 @@
 using Backend.Application.Extensions;
 using Backend.Infrastructure.Extensions;
-using Backend.Persistence.Context;
 using Backend.Persistence.Extensions;
-using JavaScriptEngineSwitcher.ChakraCore;
-using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.IdentityModel.Tokens;
 using React.AspNet;
 
-var builder = WebApplication.CreateBuilder(new WebApplicationOptions { WebRootPath = "Views/public" });
+var builder = WebApplication.CreateBuilder();
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddApplicationServiceRegistration();
 builder.Services.AddPersistenceServiceRegistration(builder.Configuration);
 builder.Services.AddInfrastructureServiceRegistration();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSwaggerGen();
 
 

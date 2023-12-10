@@ -1,18 +1,17 @@
 using Backend.Application.Abstractions.Repositories.Common;
-using Backend.Application.Extensions;
 using Backend.Persistence.Context;
 using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using React.AspNet;
 using System.Reflection;
 using JavaScriptEngineSwitcher.ChakraCore;
+using Backend.Domain.Entities.WorkEntities;
+using Microsoft.AspNetCore.Identity;
 
 namespace Backend.Persistence.Extensions
 {
@@ -26,6 +25,7 @@ namespace Backend.Persistence.Extensions
             services.AddJwt(configuration);
             services.AddMyCors(configuration);
             services.AddMyReact();
+            services.AddMyIdentity();
 
             return services;
 		}
@@ -111,5 +111,14 @@ namespace Backend.Persistence.Extensions
 
             return services;
         }
-	}
+
+        private static IServiceCollection AddMyIdentity(this IServiceCollection services) 
+        {
+            services.AddIdentityCore<Users>()
+               .AddEntityFrameworkStores<ApplicaitonDbContext>()
+               .AddDefaultTokenProviders();
+
+            return services;
+        }
+    }
 }

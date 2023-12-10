@@ -2,13 +2,10 @@
 using Backend.Persistence.Context;
 using Backend.WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
-using System.CodeDom.Compiler;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -28,11 +25,13 @@ namespace Backend.WebApi.Controllers
 		private ApplicaitonDbContext _db;
 		private IConfiguration _config;
         SHA256 sha256 = SHA256.Create();
+		private UserManager<Users> _userManager;
 
-        public LoginController(ApplicaitonDbContext db, IConfiguration config) 
+        public LoginController(ApplicaitonDbContext db, IConfiguration config, UserManager<Users> userManager) 
 		{
 			_db = db;
 			_config = config;
+			_userManager = userManager;
 		}
 
 		[AllowAnonymous]
@@ -58,13 +57,14 @@ namespace Backend.WebApi.Controllers
 
             var claims = new[]
 			{
-				new Claim(ClaimTypes.Email, user.Email),
+				new Claim(ClaimTypes.Email, user.UserName),
 				new Claim("FirstName", user.FirstName),
 				new Claim("LastName", user.LastName),
 				new Claim(ClaimTypes.Role, user.Roles.Id.ToString())
 			};
 
-            var token = new JwtSecurityToken(_config["Jwt:Issuer"],
+            var token = new JwtSecurityToken(
+				_config["Jwt:Issuer"],
 				_config["Jwt:Audience"],
 				claims,
 				expires: DateTime.Now.AddDays(1),
@@ -80,7 +80,7 @@ namespace Backend.WebApi.Controllers
 				sha256.ComputeHash(Encoding.UTF8.GetBytes(userLogin.Password)));
 
 			var currUser = _db.Users
-				.Where(a => a.Email == username && a.Password == password)
+				.Where(a => a.UserName == username && a.Password == password)
                 .Include(a => a.Roles)
                 .Include(a => a.Regions)
 				.FirstOrDefault();
@@ -101,16 +101,18 @@ namespace Backend.WebApi.Controllers
         private ApplicaitonDbContext _db;
         private IConfiguration _config;
         SHA256 sha256 = SHA256.Create();
+        private UserManager<Users> _userManager;
 
-        public RegistrationController(ApplicaitonDbContext db, IConfiguration config)
+        public RegistrationController(ApplicaitonDbContext db, IConfiguration config, UserManager<Users> userManager)
         {
             _db = db;
             _config = config;
+			_userManager = userManager;
         }
 
 		[AllowAnonymous]
 		[HttpPost]
-		public IActionResult Registration([FromBody] UserRegistration userRegistration) 
+		public async Task<IActionResult> Registration([FromBody] UserRegistration userRegistration) 
 		{
 
             var user = _db.Users
@@ -123,8 +125,21 @@ namespace Backend.WebApi.Controllers
 					sha256.ComputeHash(Encoding.UTF8.GetBytes(userRegistration.Password)));
 				Roles role = _db.Roles.Find(1);
 				Regions region = _db.Regions.Where(a => a.Name == userRegistration.Region).FirstOrDefault();
-                Users newUser = new Users
+				if (region == null) 
 				{
+					Regions tmpR = new Regions
+					{
+						Name = userRegistration.Region,
+						Area = "RF",
+						Capital = "Non"
+					};
+					_db.Regions.Add(tmpR);
+					_db.SaveChanges();
+					region = tmpR;
+				}
+				Users newUser = new Users
+				{
+					UserName = userRegistration.Username,
 					Email = userRegistration.Username,
 					Password = password,
 					FirstName = userRegistration.FirstName,
@@ -132,14 +147,24 @@ namespace Backend.WebApi.Controllers
 					Roles = role,
 					Gender = userRegistration.Gender,
 					DateOfBirth = System.DateTime.Parse(userRegistration.Birthday),
-					Regions = region
+					Regions = region,
+                };
 
-				};
+				newUser.Email = userRegistration.Username;
 
-                _db.Users.Add(newUser);
-				_db.SaveChanges();
+				var result = await _userManager.CreateAsync(newUser);
+				if (result.Succeeded)
+				{
+					return Ok("Зарегистрирован");
+				}
+				else 
+				{
+                    foreach (var error in result.Errors)
+                    {
+						System.Console.WriteLine(error.Description);
+                    }
+                }
 
-				return Ok("Зарегистрирован");
 			}
 
 			return BadRequest("Такой пользователь уже существует");

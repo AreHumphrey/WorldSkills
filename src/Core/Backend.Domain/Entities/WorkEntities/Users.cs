@@ -1,4 +1,5 @@
 ﻿using Backend.Domain.Entities.Common;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Backend.Domain.Entities.WorkEntities
 {
-	public class Users : BaseEntity
+	public class Users : IdentityUser
 	{
 		public required string Email { get; set; }
 

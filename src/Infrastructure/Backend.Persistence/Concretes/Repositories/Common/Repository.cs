@@ -1,6 +1,7 @@
 using Backend.Application.Abstractions.Repositories.Common;
 using Backend.Domain.Entities.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
