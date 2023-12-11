@@ -37,7 +37,7 @@
 </div>
 
 # Секция смены пороля 
-<h1>Sendcode<h1>
+<h1>Sendcode</h1>
 <div> 
 <p>http://serverip/api/sendcode</p>
 <p>
@@ -47,7 +47,7 @@
 <p>Если получили в ответ Ok, то пользователь присутсвует в базе данных и ему на почту отпавлен 6 значный код. Код действителен в течении 3 минут 30 секунд</p>
 <p>Если получили NotFound, то это значит, что пользователь с такой почтой не зарегестрирован</p>
 </div>
-<h1>Verifycode<h1>
+<h1>Verifycode</h1>
 <div> 
 <p>http://serverip/api/verifycode</p>
 <p>
@@ -60,7 +60,7 @@
 <p>Если получили в ответ Ok, то код был подтверждён и можно переходить к смене пароля</p>
 <p>Если получили BedRequest, то это значит, что код неверный или пользователь не найден</p>
 </div>
-<h1>Changepassword<h1>
+<h1>Changepassword</h1>
 <div> 
 <p>http://serverip/api/сhangepassword</p>
 <p>
@@ -75,7 +75,7 @@
 <p>Если получили NotFound, то это значит, что пользователь с такой почтой не зарегестрирован</p>
 </div>
 # UserProfile
-<h1>Changepassword<h1>
+<h1>Changepassword</h1>
 <div> 
 <p>http://serverip/api/getprofileinfo</p>
 <p>
