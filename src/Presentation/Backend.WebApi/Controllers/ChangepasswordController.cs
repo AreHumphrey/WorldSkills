@@ -70,6 +70,7 @@ namespace Backend.WebApi.Controllers
         {
             string code = "";
             EmailTokenProvider<Users> tokenProvider = new EmailTokenProvider<Users>();
+
             var user = _db.Users.Where(a => a.UserName == email).FirstOrDefault();
             if (user != null)
             {
@@ -77,6 +78,7 @@ namespace Backend.WebApi.Controllers
                 await _emailSender.SendEmailAsync(email, "Смена пароля", code);
                 return Ok();
             }
+
             return NotFound();
         }
     }

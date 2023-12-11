@@ -52,7 +52,14 @@ namespace Backend.WebApi.Controllers
 
         private string Generate(Users user)
         {
-			var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+			string key = _config["Jwt:Key"];
+			if (key == null) 
+			{
+				System.Console.WriteLine("Ahtung key is null");
+				key = "42F7vQuTjKfwsVQMX1pfsfOJmjFQzQA6";
+            }
+
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
 			var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
@@ -81,6 +88,7 @@ namespace Backend.WebApi.Controllers
 
 			var currUser = _db.Users
 				.Where(a => a.UserName == username && a.Password == password)
+				.Include(a => a.Roles)
 				.FirstOrDefault();
 
 			if (currUser != null) 
