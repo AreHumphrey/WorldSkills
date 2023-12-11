@@ -81,8 +81,6 @@ namespace Backend.WebApi.Controllers
 
 			var currUser = _db.Users
 				.Where(a => a.UserName == username && a.Password == password)
-                .Include(a => a.Roles)
-                .Include(a => a.Regions)
 				.FirstOrDefault();
 
 			if (currUser != null) 
