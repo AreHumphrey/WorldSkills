@@ -6,13 +6,11 @@ import 'dart:convert';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'widgets/CustomButtonLogin_w.dart';
 import 'widgets/CustomButtonRegistration_w.dart';
-
+import 'forgot_password/ForgotPassword.dart';
 
 void main() {
   runApp(const MyApp());
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -55,16 +53,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
-
-
 
 class _LoginScreenState extends State<LoginScreen> {
   late String username = ' ';
@@ -86,7 +80,6 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-
             Padding(
               padding: const EdgeInsets.only(top: 0),
               child: Center(
@@ -97,7 +90,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-
             Center(
               child: Container(
                 height: 60,
@@ -135,9 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-
             SizedBox(height: 40),
-
             Center(
               child: Container(
                 height: 60,
@@ -175,9 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-
             SizedBox(height: 40),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -196,7 +184,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(width: 40),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ForgotPasswordEmailScreen()),
+                    );
+                  },
                   child: Text(
                     'Забыли пароль?',
                     style: TextStyle(fontSize: 18, color: Colors.blue),
@@ -216,7 +210,8 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RegistrationScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => RegistrationScreen()),
                 );
               },
               style: ButtonStyle(
@@ -238,9 +233,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-
-
-
   Future<void> _loginUser(String username, String password) async {
     String? result = await ApiService.loginUser(username, password);
     if (result != null) {
@@ -248,13 +240,9 @@ class _LoginScreenState extends State<LoginScreen> {
         context,
         MaterialPageRoute(builder: (context) => BottomNavBar()),
       );
-    } else {
-
-    }
+    } else {}
   }
 }
-
-
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -262,8 +250,6 @@ class RegistrationScreen extends StatefulWidget {
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
-
-
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   String? username = ' ';
@@ -449,7 +435,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             SizedBox(height: 40),
             CustomButtonRegistration(
               onPressed: () {
-
                 _registerUser();
               },
               text: 'Зарегистрироваться',
@@ -459,7 +444,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ),
     );
   }
-
 
   Future<void> _registerUser() async {
     String? result = await ApiService.registerUser(
@@ -482,8 +466,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
   }
 }
-
-
 
 class ApiService {
   static Future<String> registerUser(
@@ -516,15 +498,11 @@ class ApiService {
         return 'Ok';
       } else {
         return 'BadRequest';
-
       }
     } on Exception catch (_) {
-
       rethrow;
     }
   }
-
-
 
   static Future<String?> loginUser(String username, String password) async {
     final String apiUrl = 'http://morderboy.ru/api/login';
@@ -543,12 +521,8 @@ class ApiService {
       var jsonResponse = json.decode(response.body);
       String token = jsonResponse['token'];
       return token;
-
     } else {
       return 'NotFound';
     }
-
   }
-
 }
-
