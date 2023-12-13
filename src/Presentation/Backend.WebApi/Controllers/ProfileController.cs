@@ -122,7 +122,7 @@ namespace Backend.WebApi.Controllers
 		{
 
             var user = _db.Users
-				.Where(a => a.Email == userRegistration.Username)
+				.Where(a => a.UserName == userRegistration.Username)
 				.FirstOrDefault();
 
 			if (user == null) 

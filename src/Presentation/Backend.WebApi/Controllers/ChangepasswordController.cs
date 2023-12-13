@@ -66,16 +66,16 @@ namespace Backend.WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Sendcode([FromBody] string email)
+        public async Task<IActionResult> Sendcode([FromBody] EmailModel email)
         {
             string code = "";
             EmailTokenProvider<Users> tokenProvider = new EmailTokenProvider<Users>();
 
-            var user = _db.Users.Where(a => a.UserName == email).FirstOrDefault();
+            var user = _db.Users.Where(a => a.UserName == email.Email).FirstOrDefault();
             if (user != null)
             {
                 code = await tokenProvider.GenerateAsync("Email", _userManager, user);
-                await _emailSender.SendEmailAsync(email, "Смена пароля", code);
+                await _emailSender.SendEmailAsync(email.Email, "Смена пароля", code);
                 return Ok();
             }
 

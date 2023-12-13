@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Newtonsoft.Json;
 using Backend.WebApi.Models;
+using Newtonsoft.Json.Linq;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace Backend.WebApi.Controllers
 {
@@ -39,6 +42,9 @@ namespace Backend.WebApi.Controllers
                                          .Include(a => a.Regions)
                                          .FirstOrDefaultAsync();
 
+            user.UserResults = await _db.Results.Where(a => a.Users.Id == user.Id)
+                                                .Include(b => b.Championships)
+                                                .ToListAsync();
 
             Regions? region = user.Regions;
 
@@ -56,8 +62,29 @@ namespace Backend.WebApi.Controllers
                 Area = region.Area
             };
 
-            string json = JsonConvert.SerializeObject(userToJSON);
-            return Ok(json);
+            JObject json = JObject.FromObject(userToJSON);
+
+            JObject jObject = new JObject();
+            int i = 1;
+            foreach (Backend.Domain.Entities.WorkEntities.Results a in user.UserResults) 
+            {
+                ResultsToJSON res = new ResultsToJSON
+                {
+                    ChampName = a.Competition_name,
+                    Competence = a.Competition_number,
+                    ParticipantID = a.Users.Id,
+                    Module = a.Modules,
+                    Grade = a.Mark
+                };
+
+                JProperty property = new JProperty("Result" + i);
+                property.Value = JObject.FromObject(res);
+                jObject.Add(property);
+                i++;
+            }
+            json["Results"] = jObject;
+
+            return Ok(json.ToString());
         }
     }
 }
