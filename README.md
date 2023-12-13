@@ -5,7 +5,7 @@
 
 # Login
 <div>
-<p>http://serverip/api/login</p>
+<p>http://morderboy.ru/api/login</p>
 <p>
 Сюда неоходимо отослать 
   {
@@ -19,7 +19,7 @@
 
 # Registration
 <div> 
-<p>http://serverip/api/registration</p>
+<p>http://morderboy.ru/api/registration</p>
 <p>
 Сюда неоходимо отослать
   {
@@ -39,7 +39,7 @@
 # Секция смены пороля 
 <div> 
 <h1>Sendcode</h1>
-<p>http://serverip/api/sendcode</p>
+<p>http://morderboy.ru/api/sendcode</p>
 <p>
 Сюда неоходимо отослать
   { email }
@@ -48,8 +48,8 @@
 <p>Если получили NotFound, то это значит, что пользователь с такой почтой не зарегестрирован</p>
 </div>
 <div> 
-<h1>Verifycode</h1>
-<p>http://serverip/api/verifycode</p>
+<h1>Verificode</h1>
+<p>http://morderboy.ru/api/verificode</p>
 <p>
 Сюда неоходимо отослать
   {
@@ -62,7 +62,7 @@
 </div>
 <div> 
 <h1>Changepassword</h1>
-<p>http://serverip/api/сhangepassword</p>
+<p>http://morderboy.ru/api/сhangepassword</p>
 <p>
 Сюда неоходимо отослать
   {
@@ -78,7 +78,7 @@
 # UserProfile
 <div> 
 <h1>GetProfileInfo</h1>
-<p>http://serverip/api/getprofileinfo</p>
+<p>http://morderboy.ru/api/getprofileinfo</p>
 <p>
 Этот метод типа GET сюда ничего не надо отсылать кроме bearer токена, для подтверждения авторизации пользователя
 <p>
@@ -94,4 +94,15 @@
 </p>
 <p>Если получили NotFound("У пользователя нет claims"), это значит, что куки пользователя не найдены на сервере</p>
 <p>Если получили NotFound, то это значит, что пользователь не найден</p>
+</div>
+
+# Getname
+<div> 
+<h1>GetName</h1>
+<p>http://morderboy.ru/api/getname</p>
+<p>
+Этот метод типа GET сюда ничего не надо отсылать кроме bearer токена, для подтверждения авторизации пользователя
+<p>
+<p>Если получили в ответ Ok, то всё ок и вам вернут строку name + " " + sername</p>
+<p>Если получили NotFound("У пользователя нет claims"), это значит, что куки пользователя не найдены на сервере</p>
 </div>
