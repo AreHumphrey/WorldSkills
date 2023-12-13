@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'widgets/CustomButtonLogin_w.dart';
 import 'widgets/CustomButtonRegistration_w.dart';
 import 'forgot_password/ForgotPassword.dart';
+String? globalToken;
 
 void main() {
   runApp(const MyApp());
@@ -210,8 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => RegistrationScreen()),
+                  MaterialPageRoute(builder: (context) => RegistrationScreen()),
                 );
               },
               style: ButtonStyle(
@@ -236,11 +236,18 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _loginUser(String username, String password) async {
     String? result = await ApiService.loginUser(username, password);
     if (result != null) {
+      globalToken = result;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => BottomNavBar()),
       );
-    } else {}
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Пользователь не найдет'),
+        ),
+      );
+    }
   }
 }
 
@@ -518,11 +525,11 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
-      var jsonResponse = json.decode(response.body);
-      String token = jsonResponse['token'];
+      String token = response.body;
       return token;
     } else {
       return 'NotFound';
+      //ис
     }
   }
 }

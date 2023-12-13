@@ -1,5 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:http/http.dart' as http;
+
+Future<String> getName(String token) async {
+  final url = Uri.parse('http://morderboy.ru/api/getname');
+
+  Map<String, String> headers = {
+    'Authorization': 'Bearer $token',
+  };
+
+  final response = await http.get(url, headers: headers);
+
+  if (response.statusCode == 200) {
+    return response.body;
+  } else if (response.statusCode == 404) {
+    throw Exception("У пользователя нет claims");
+  } else {
+    throw Exception("Ошибка при получении имени пользователя: ${response.statusCode}");
+  }
+}
 
 class ProfilePage extends StatelessWidget {
   @override
