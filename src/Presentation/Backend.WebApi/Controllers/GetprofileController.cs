@@ -38,6 +38,8 @@ namespace Backend.WebApi.Controllers
             Users? user = await _db.Users.Where(a => a.UserName == email)
                                          .Include(a => a.Regions)
                                          .FirstOrDefaultAsync();
+
+
             Regions? region = user.Regions;
 
             if (user == null) 

@@ -28,5 +28,7 @@ namespace Backend.Domain.Entities.WorkEntities
 
 		[ForeignKey("RegionCode")]
 		public Regions Regions { get; set; }
+
+		public List<Results>? UserResults { get; set; }
 	}
 }

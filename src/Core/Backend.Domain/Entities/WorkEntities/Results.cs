@@ -14,7 +14,8 @@ namespace Backend.Domain.Entities.WorkEntities
 
 		public string? Competition_name { get; set; }
 
-		public int Competitionship_code { get; set; }
+        [ForeignKey("Competitionship_code")]
+        public Championships Championships { get; set; }
 
 		public float Mark {  get; set; }
 
