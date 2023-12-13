@@ -94,7 +94,9 @@ namespace Backend.Persistence.Extensions
                 {
                     policy.AllowAnyHeader()
                           .AllowAnyMethod()
-                          .AllowAnyOrigin();
+                          .WithOrigins("http://localhost:3000/*",
+                                       "https://morderboy.ru/")
+                          .AllowCredentials();
                 })
             );
 
