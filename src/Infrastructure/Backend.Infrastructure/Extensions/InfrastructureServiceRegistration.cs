@@ -64,7 +64,7 @@ namespace Backend.Infrastructure.Extensions
             {
                 policy.AllowAnyHeader()
                       .AllowAnyMethod()
-                      .WithOrigins("http://localhost:3000/*",
+                      .WithOrigins("http://localhost:3000",
                                    "https://morderboy.ru/")
                       .AllowCredentials();
             })

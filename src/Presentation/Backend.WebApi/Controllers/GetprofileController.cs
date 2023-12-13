@@ -4,11 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using Newtonsoft.Json;
 using Backend.WebApi.Models;
 using Newtonsoft.Json.Linq;
-using System.Reflection;
-using System.Diagnostics;
 
 namespace Backend.WebApi.Controllers
 {

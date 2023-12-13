@@ -100,7 +100,9 @@ namespace Backend.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Verifycode([FromBody] VerifyCode verifiCode)
         {
-            var user = _db.Users.Where(a => a.UserName == verifiCode.Email).FirstOrDefault();
+            var user = await _db.Users.Where(a => a.UserName == verifiCode.Email).FirstOrDefaultAsync();
+            System.Console.WriteLine("email: " + verifiCode.Email);
+            System.Console.WriteLine("code: " + verifiCode.Code);
             if (user != null)
             {
                 EmailTokenProvider<Users> tokenProvider = new EmailTokenProvider<Users>();
@@ -110,9 +112,11 @@ namespace Backend.WebApi.Controllers
                 {
                     return Ok();
                 }
+
+                return BadRequest("Код не верефицирован");
             }
 
-            return BadRequest();
+            return NotFound("Пользователь не найден");
         }
     }
 }
