@@ -35,10 +35,7 @@
   <ItemGroup>
     <Folder Include="database\" />
     <Folder Include="Migrations\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\index.html" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
