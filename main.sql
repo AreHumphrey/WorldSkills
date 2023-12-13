@@ -41,7 +41,7 @@ Create Table Results
     User_id            int primary key,
     Competition_number int  not null,
     Competition_name   text not null,
-    Championship_code  int  not null,
+    Championship_code  int  references Championships(Champ_id),
     Mark               float check (0 <= Mark <= 100),
     Modules            text not null,
     Foreign Key (User_id) References Users (User_id)
