@@ -7,7 +7,33 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'widgets/CustomButtonLogin_w.dart';
 import 'widgets/CustomButtonRegistration_w.dart';
 import 'forgot_password/ForgotPassword.dart';
-String? globalToken;
+
+
+
+class GlobalToken {
+  static final GlobalToken _instance = GlobalToken._internal();
+  factory GlobalToken() => _instance;
+  GlobalToken._internal();
+
+  String token = '';
+  DateTime expiration = DateTime.now();
+
+  void setToken(String newToken, DateTime newExpiration) {
+    token = newToken;
+    expiration = newExpiration;
+  }
+
+  bool isTokenValid() {
+    return DateTime.now().isBefore(expiration);
+  }
+
+  void logout() {
+    token = '';
+    expiration = DateTime.now();
+  }
+
+}
+
 
 void main() {
   runApp(const MyApp());
@@ -236,7 +262,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _loginUser(String username, String password) async {
     String? result = await ApiService.loginUser(username, password);
     if (result != null) {
-      globalToken = result;
+      DateTime tokenExpiration = DateTime.now().add(Duration(hours: 24));
+      GlobalToken().setToken(result, tokenExpiration);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => BottomNavBar()),
@@ -525,11 +552,15 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
-      String token = response.body;
-      return token;
+      GlobalToken().token = response.body;
+      return GlobalToken().token;
     } else {
       return 'NotFound';
-      //ис
     }
   }
 }
+
+
+
+
+

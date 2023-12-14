@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
 
+import 'main.dart';
+
 Future<String> getName(String token) async {
+  if (!GlobalToken().isTokenValid()) {
+    throw Exception("Токен истек или недействителен");
+
+  }
+
   final url = Uri.parse('http://morderboy.ru/api/getname');
 
   Map<String, String> headers = {
@@ -20,7 +27,35 @@ Future<String> getName(String token) async {
   }
 }
 
-class ProfilePage extends StatelessWidget {
+
+
+
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  String userName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserName();
+  }
+
+  Future<void> fetchUserName() async {
+    String token = GlobalToken().token;
+    try {
+      String name = await getName(token);
+      setState(() {
+        userName = name;
+      });
+    } catch (e) {
+
+      print('Error fetching user name: $e');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     TimeOfDay currentTime = TimeOfDay.now();
@@ -34,7 +69,6 @@ class ProfilePage extends StatelessWidget {
     }
 
     String userTitle = '';
-    String userName = '';
     String gender = '';
 
     if (gender == 'male') {
@@ -59,7 +93,7 @@ class ProfilePage extends StatelessWidget {
 
 
             Text(
-              '$greeting\n$userTitle $userName!',
+              '$greeting\n$userTitle $userName',
               style: TextStyle(
                 color: Color(0xFF003764),
                 fontSize: 35,
@@ -192,7 +226,11 @@ class ProfilePage extends StatelessWidget {
 
             MaterialButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/login');
+                GlobalToken().logout();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
               },
               child: Container(
                 width: 250,
@@ -206,7 +244,7 @@ class ProfilePage extends StatelessWidget {
                       offset: Offset(0, 0),
                     ),
                   ],
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Center(
                   child: Text(
@@ -224,6 +262,7 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
+
 
   Future<void> _openChangeDataDialog(BuildContext context, String title,
       {bool isPasswordDialog = false}) async {

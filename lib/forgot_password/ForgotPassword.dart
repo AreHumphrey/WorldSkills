@@ -77,7 +77,7 @@ class ForgotPasswordEmailScreen extends StatelessWidget {
                   ),
 
 
-                  SizedBox(height: 20),
+                  SizedBox(height: 70),
 
 
                   ElevatedButton(
@@ -218,14 +218,21 @@ class VerificationCodeScreen extends StatelessWidget {
 
 
             ElevatedButton(
-              onPressed: () {
-                verifyResetCode(GlobalData().email, code);
-                //сделать проверку говна на палках
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => NewPasswordInputScreen()),
-                );
+              onPressed: () async {
+                var responseCode = await verifyResetCode(GlobalData().email, code);
+                if (responseCode == 200) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NewPasswordInputScreen()),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Неправильный код'),
+                      duration: Duration(seconds: 3),
+                    ),
+                  );
+                }
               },
 
               style: ButtonStyle(
