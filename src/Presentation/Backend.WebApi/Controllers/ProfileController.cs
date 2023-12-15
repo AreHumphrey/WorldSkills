@@ -67,6 +67,7 @@ namespace Backend.WebApi.Controllers
 				new Claim(ClaimTypes.Email, user.UserName),
 				new Claim("FirstName", user.FirstName),
 				new Claim("LastName", user.LastName),
+				new Claim(ClaimTypes.Gender, user.Gender),
 				new Claim(ClaimTypes.Role, user.Roles.Id.ToString())
 			};
 
