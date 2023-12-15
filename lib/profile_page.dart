@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
+import 'package:wordskills/forgot_password/ForgotPassword.dart';
+import 'dart:convert';
 
 import 'main.dart';
 
-Future<String> getName(String token) async {
+
+Future<Map<String, String>> getName(String token) async {
   if (!GlobalToken().isTokenValid()) {
     throw Exception("Токен истек или недействителен");
-
   }
 
   final url = Uri.parse('http://morderboy.ru/api/getname');
@@ -19,7 +21,15 @@ Future<String> getName(String token) async {
   final response = await http.get(url, headers: headers);
 
   if (response.statusCode == 200) {
-    return response.body;
+    Map<String, dynamic> data = json.decode(response.body);
+    String name = data['name'];
+    String surname = data['surname'];
+    String gender = data['gender'];
+    return {
+      'name': name,
+      'surname': surname,
+      'gender': gender,
+    };
   } else if (response.statusCode == 404) {
     throw Exception("У пользователя нет claims");
   } else {
@@ -37,25 +47,48 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   String userName = '';
+  String userGender = '';
 
   @override
   void initState() {
     super.initState();
     fetchUserName();
+    fetchUserGender();
   }
 
   Future<void> fetchUserName() async {
     String token = GlobalToken().token;
     try {
-      String name = await getName(token);
+      Map<String, String>? userData = await getName(token);
+      String name = userData['name']!;
       setState(() {
         userName = name;
       });
     } catch (e) {
-
       print('Error fetching user name: $e');
     }
   }
+
+  Future<void> fetchUserGender() async {
+    String token = GlobalToken().token;
+    try {
+      Map<String, String>? userData = await getName(token);
+      String gender = userData['gender']!;
+      setState(() {
+        userGender = gender;
+      });
+
+      if (userGender == 'male' || userGender == 'Male') {
+        userGender = 'Mr.';
+      } else if (userGender == 'female' || userGender == 'Female') {
+        userGender = 'Ms.';
+      }
+
+    } catch (e) {
+      print('Error fetching user gender: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     TimeOfDay currentTime = TimeOfDay.now();
@@ -66,15 +99,6 @@ class _ProfilePageState extends State<ProfilePage> {
       greeting = 'Добрый день,';
     } else {
       greeting = 'Добрый вечер,';
-    }
-
-    String userTitle = '';
-    String gender = '';
-
-    if (gender == 'male') {
-      userTitle = 'Mr.';
-    } else if (gender == 'female') {
-      userTitle = 'Ms.';
     }
 
     return Scaffold(
@@ -93,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
             Text(
-              '$greeting\n$userTitle $userName',
+              '$greeting\n $userGender $userName',
               style: TextStyle(
                 color: Color(0xFF003764),
                 fontSize: 35,
@@ -129,12 +153,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SvgPicture.asset(
-                      'assets/paroll.svg',
+                      'assets/mail.svg',
                       semanticsLabel: 'Password',
-                      width: 32,
-                      height: 32,
+                      width: 23,
+                      height: 23,
                     ),
-                    SizedBox(width: 8),
+                    SizedBox(width: 20),
                     Text(
                       'Изменить почту',
                       style: TextStyle(
@@ -147,7 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
 
-            SizedBox(height: 20),
+            SizedBox(height: 25),
 
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -171,8 +195,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.person, size: 28, color: Color(0xFF0084AD)),
-                    SizedBox(width: 8),
+                    SvgPicture.asset(
+                      'assets/person.svg',
+                      semanticsLabel: 'Name',
+                      width: 28,
+                      height: 28,
+                    ),
+                    SizedBox(width: 20),
                     Text(
                       'Изменить имя',
                       style: TextStyle(
@@ -185,7 +214,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
 
-            SizedBox(height: 20),
+            SizedBox(height: 25),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
               width: 318,
@@ -203,13 +232,22 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               child: GestureDetector(
                 onTap: () {
-                  _openChangeDataDialog(context, 'Change Password');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ForgotPasswordEmailScreen()),
+                  );
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.lock, size: 28, color: Color(0xFF0084AD)),
-                    SizedBox(width: 8),
+                    SvgPicture.asset(
+                      'assets/paroll.svg',
+                      semanticsLabel: 'Password',
+                      width: 28,
+                      height: 28,
+                    ),
+                    SizedBox(width: 20),
                     Text(
                       'Изменить пароль',
                       style: TextStyle(
@@ -222,7 +260,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             // Logout Button
-            SizedBox(height: 80),
+            SizedBox(height: 70),
 
             MaterialButton(
               onPressed: () {
@@ -244,7 +282,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       offset: Offset(0, 0),
                     ),
                   ],
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(18),
                 ),
                 child: Center(
                   child: Text(
