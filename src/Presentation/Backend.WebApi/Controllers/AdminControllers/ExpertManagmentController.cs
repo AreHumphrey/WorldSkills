@@ -52,5 +52,23 @@ namespace Backend.WebApi.Controllers.AdminControllers
 
             return Ok(expertModels);
         }
+
+        [HttpDelete]
+        [Authorize(Roles = "A")]
+
+        public async Task<IActionResult> DeleteExpert([FromBody] List<string> ids)
+        {
+            foreach (var id in ids) 
+            {
+                Users? user = await _userManager.FindByIdAsync(id);
+
+                if (user != null) 
+                {
+                    await _userManager.DeleteAsync(user);
+                }
+            }
+
+            return Ok();
+        }
     }
 }
