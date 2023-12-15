@@ -68,7 +68,7 @@ namespace Backend.WebApi.Controllers
 				new Claim("FirstName", user.FirstName),
 				new Claim("LastName", user.LastName),
 				new Claim(ClaimTypes.Gender, user.Gender),
-				new Claim(ClaimTypes.Role, user.Roles.Id.ToString())
+				new Claim(ClaimTypes.Role, user.Roles.Role.ToString())
 			};
 
             var token = new JwtSecurityToken(
