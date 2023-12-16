@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'widgets/CustomButtonLogin_w.dart';
 import 'widgets/CustomButtonRegistration_w.dart';
 import 'forgot_password/ForgotPassword.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -32,6 +33,31 @@ class GlobalToken {
     expiration = DateTime.now();
   }
 
+  void autoLogin(BuildContext context) {
+    if (isTokenValid()) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => BottomNavBar()),
+      );
+    }
+  }
+
+  Future<void> saveTokenToPermanentStorage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', token);
+    await prefs.setString('expiration', expiration.toIso8601String());
+  }
+
+  Future<void> loadTokenFromPermanentStorage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedToken = prefs.getString('token');
+    String? savedExpiration = prefs.getString('expiration');
+    if (savedToken != null && savedExpiration != null) {
+      token = savedToken;
+      expiration = DateTime.parse(savedExpiration);
+    }
+  }
+
 }
 
 
@@ -39,8 +65,11 @@ void main() {
   runApp(const MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +112,7 @@ class MyApp extends StatelessWidget {
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -92,8 +122,13 @@ class _LoginScreenState extends State<LoginScreen> {
   late String password = ' ';
   bool rememberMe = false;
 
+
+
   @override
   Widget build(BuildContext context) {
+
+    GlobalToken().autoLogin(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -159,8 +194,10 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                 height: 60,
                 width: 380,
+
                 child: TextFormField(
                   style: TextStyle(fontSize: 20),
+                  obscureText: true,
                   decoration: InputDecoration(
                     hintText: 'Пароль',
                     hintStyle: TextStyle(fontSize: 20),
@@ -203,12 +240,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       onChanged: (bool? value) {
                         setState(() {
                           rememberMe = value!;
+                          if (rememberMe) {
+                            GlobalToken().saveTokenToPermanentStorage();
+                          }
                         });
                       },
                     ),
                     Text('Запомнить меня', style: TextStyle(fontSize: 18)),
                   ],
                 ),
+
                 SizedBox(width: 40),
                 GestureDetector(
                   onTap: () {

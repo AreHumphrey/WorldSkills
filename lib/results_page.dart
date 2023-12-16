@@ -133,6 +133,7 @@ class _ResultsPageState extends State<ResultsPage> {
                                     fontSize: 16,
                                     color: Colors.grey[700]),
                               ),
+
                               SizedBox(height: 10),
                               Divider(color: Colors.grey[600]),
                               SizedBox(height: 15),

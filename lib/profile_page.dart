@@ -107,13 +107,14 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 70),
-            CircleAvatar(
-              radius: 120,
-              backgroundColor: Colors.white,
+            SizedBox(height: 50),
+            Center(
+              child: Image.asset(
+                'assets/icon_bear.png',
+                width: 240,
+                height: 240,
+              ),
             ),
-
-            SizedBox(height: 10),
 
 
             Text(
@@ -260,7 +261,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             // Logout Button
-            SizedBox(height: 70),
+            SizedBox(height: 60),
 
             MaterialButton(
               onPressed: () {
