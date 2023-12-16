@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'main.dart';
+
 
 class ResultsPage extends StatefulWidget {
   @override
   _ResultsPageState createState() => _ResultsPageState();
 }
+
 
 class _ResultsPageState extends State<ResultsPage> {
   Map<dynamic, dynamic> results = {};
@@ -18,6 +19,8 @@ class _ResultsPageState extends State<ResultsPage> {
     super.initState();
     fetchResults();
   }
+
+
 
   Future<void> fetchResults() async {
     if (!GlobalToken().isTokenValid()) {
@@ -53,17 +56,18 @@ class _ResultsPageState extends State<ResultsPage> {
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-
             SizedBox(height: 80),
+
 
             Center(
               child: Positioned(
@@ -79,96 +83,110 @@ class _ResultsPageState extends State<ResultsPage> {
               ),
             ),
 
-              ListView.builder(
-                physics: NeverScrollableScrollPhysics(), 
-                shrinkWrap: true,
-                itemCount: results.length,
-                itemBuilder: (context, index) {
-                  final result = results['Result ${index + 1}'];
-                  return Padding(
 
-                    padding: EdgeInsets.all(2.0),
-
-                    child: Container(
-                      margin: EdgeInsets.all(12.0),
-                      decoration: BoxDecoration(
+            ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: results.length,
+              itemBuilder: (context, index) {
+                final result = results['Result ${index + 1}'];
+                return Padding(
+                  padding: EdgeInsets.all(2.0),
+                  child: Container(
+                    margin: EdgeInsets.all(12.0),
+                    decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
                             color: Color(0x40000000),
                             offset: Offset(0, 4),
                             blurRadius: 4,
-
                           ),
                         ],
                         borderRadius: BorderRadius.circular(10),
-                        color: Color(0xFFFFFFFF)
-                      ),
-                      padding: EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        color: Color(0xFFFFFFFF)),
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height: 20),
+                        ListTile(
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
 
-                        children: <Widget>[
+                              Text(
+                                'Чемпионат:\t\t  ${result['ChampName']}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: Colors.grey[700]),
+                              ),
 
-                          SizedBox(height: 20),
-                          ListTile(
+                              SizedBox(height: 10),
+                              Divider(color: Colors.grey[600]),
+                              SizedBox(height: 15),
 
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Чемпионат:\t\t  ${result['ChampName']}',
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.grey[700]),
-                                ),
-                                SizedBox(height: 10),
-                                Divider(color: Colors.grey[600]),
-                                SizedBox(height: 15),
-                                Text(
-                                  'Компетенция:\t\t  ${result['Competence']}',
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.grey[700]),
-                                ),
-                                SizedBox(height: 10),
-                                Divider(color: Colors.grey[600]),
-                                SizedBox(height: 15),
-                                Text(
-                                  'ID участника:\t\t ${result['ParticipantID']}',
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.grey[700]),
-                                ),
-                                SizedBox(height: 10),
-                                Divider(color: Colors.grey[600]),
-                                SizedBox(height: 15),
+                              Text(
+                                'Компетенция:\t\t  ${result['Competence']}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: Colors.grey[700]),
+                              ),
+                              SizedBox(height: 10),
+                              Divider(color: Colors.grey[600]),
+                              SizedBox(height: 15),
 
-                                Text(
-                                  'Модули:\t\t  ${result['Module']}',
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.grey[700]),
-                                ),
-                                SizedBox(height: 10),
-                                Divider(color: Colors.grey[600]),
-                                SizedBox(height: 15),
-                                Text(
-                                  'Итог:\t\t  ${result['Grade']}',
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color(0xFFB0183D)),
-                                ),
-                              ],
-                            ),
+                              Text(
+                                'ID участника:\t\t ${result['ParticipantID']}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: Colors.grey[700]),
+                              ),
+
+                              SizedBox(height: 10),
+                              Divider(color: Colors.grey[600]),
+                              SizedBox(height: 15),
+
+                              Text(
+                                'Модули:\t\t  ${result['Module']}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: Colors.grey[700]),
+                              ),
+
+                              SizedBox(height: 10),
+                              Divider(color: Colors.grey[600]),
+                              SizedBox(height: 15),
+
+                              Text(
+                                'Итог:\t\t  ${result['Grade']}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: Color(0xFFB0183D)),
+                              ),
+
+                              SizedBox(height: 10),
+                              Divider(color: Colors.grey[600]),
+                              SizedBox(height: 15),
+
+                            ],
                           ),
-                          SizedBox(height: 10),
-
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 10),
+                      ],
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
+            ),
             SizedBox(height: 130),
-
-
-
           ],
         ),
       ),
     );
   }
-
-
-
 }
