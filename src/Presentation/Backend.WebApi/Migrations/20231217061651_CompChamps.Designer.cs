@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.WebApi.Migrations
 {
     [DbContext(typeof(ApplicaitonDbContext))]
-    [Migration("20231210095522_Initial")]
-    partial class Initial
+    [Migration("20231217061651_CompChamps")]
+    partial class CompChamps
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,9 +46,50 @@ namespace Backend.WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("is_over")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.ToTable("Championships");
+                });
+
+            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Competence", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Competence_code");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Competences");
+                });
+
+            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.CompetencesChampionships", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ChampionshipsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CompetenceId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CompetencesChampionships");
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Events", b =>
@@ -122,6 +163,8 @@ namespace Backend.WebApi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Competitionship_code");
+
                     b.HasIndex("User_id");
 
                     b.ToTable("Results");
@@ -166,6 +209,43 @@ namespace Backend.WebApi.Migrations
                     b.ToTable("Skills");
                 });
 
+            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.UsersChampionships", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ChampionshipsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UsersId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UsersChampionships");
+                });
+
+            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.UsersCompetence", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CompetenceId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UsersId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UsersCompetences");
+                });
+
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Volunteers", b =>
                 {
                     b.Property<int>("Id")
@@ -191,55 +271,6 @@ namespace Backend.WebApi.Migrations
                     b.HasIndex("RegionCode");
 
                     b.ToTable("Volunteers");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
@@ -359,21 +390,6 @@ namespace Backend.WebApi.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
@@ -428,9 +444,17 @@ namespace Backend.WebApi.Migrations
 
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Results", b =>
                 {
-                    b.HasOne("Backend.Domain.Entities.WorkEntities.Users", "Users")
+                    b.HasOne("Backend.Domain.Entities.WorkEntities.Championships", "Championships")
                         .WithMany()
+                        .HasForeignKey("Competitionship_code")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Domain.Entities.WorkEntities.Users", "Users")
+                        .WithMany("UserResults")
                         .HasForeignKey("User_id");
+
+                    b.Navigation("Championships");
 
                     b.Navigation("Users");
                 });
@@ -446,15 +470,6 @@ namespace Backend.WebApi.Migrations
                     b.Navigation("Regions");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
@@ -466,21 +481,6 @@ namespace Backend.WebApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -514,6 +514,11 @@ namespace Backend.WebApi.Migrations
                     b.Navigation("Regions");
 
                     b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Users", b =>
+                {
+                    b.Navigation("UserResults");
                 });
 #pragma warning restore 612, 618
         }

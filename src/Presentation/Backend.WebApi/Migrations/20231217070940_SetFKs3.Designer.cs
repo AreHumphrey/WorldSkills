@@ -3,6 +3,7 @@ using System;
 using Backend.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.WebApi.Migrations
 {
     [DbContext(typeof(ApplicaitonDbContext))]
-    partial class ApplicaitonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231217070940_SetFKs3")]
+    partial class SetFKs3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.14");
@@ -117,29 +120,6 @@ namespace Backend.WebApi.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.ExpertCompetence", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("CompetenceId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UsersId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompetenceId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("ExpertCompetences");
-                });
-
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Regions", b =>
                 {
                     b.Property<int>("Id")
@@ -233,13 +213,32 @@ namespace Backend.WebApi.Migrations
                     b.ToTable("Skills");
                 });
 
-            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.UsersChampionshipsCompetences", b =>
+            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.UsersChampionships", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ChampionshipsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UsersId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChampionshipsId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("UsersChampionships");
+                });
+
+            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.UsersCompetence", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("CompetenceId")
@@ -252,13 +251,11 @@ namespace Backend.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChampionshipsId");
-
                     b.HasIndex("CompetenceId");
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("UsersChampionshipsCompetences");
+                    b.ToTable("UsersCompetences");
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Volunteers", b =>
@@ -476,25 +473,6 @@ namespace Backend.WebApi.Migrations
                     b.Navigation("Competence");
                 });
 
-            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.ExpertCompetence", b =>
-                {
-                    b.HasOne("Backend.Domain.Entities.WorkEntities.Competence", "Competence")
-                        .WithMany()
-                        .HasForeignKey("CompetenceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Backend.Domain.Entities.WorkEntities.Users", "Users")
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Competence");
-
-                    b.Navigation("Users");
-                });
-
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Results", b =>
                 {
                     b.HasOne("Backend.Domain.Entities.WorkEntities.Championships", "Championships")
@@ -512,7 +490,7 @@ namespace Backend.WebApi.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.UsersChampionshipsCompetences", b =>
+            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.UsersChampionships", b =>
                 {
                     b.HasOne("Backend.Domain.Entities.WorkEntities.Championships", "Championships")
                         .WithMany()
@@ -520,6 +498,19 @@ namespace Backend.WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Backend.Domain.Entities.WorkEntities.Users", "Users")
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Championships");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.UsersCompetence", b =>
+                {
                     b.HasOne("Backend.Domain.Entities.WorkEntities.Competence", "Competence")
                         .WithMany()
                         .HasForeignKey("CompetenceId")
@@ -531,8 +522,6 @@ namespace Backend.WebApi.Migrations
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Championships");
 
                     b.Navigation("Competence");
 

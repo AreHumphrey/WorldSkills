@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.WebApi.Migrations
 {
     [DbContext(typeof(ApplicaitonDbContext))]
-    [Migration("20231213054723_AddChampToresults")]
-    partial class AddChampToresults
+    [Migration("20231217075831_MakeUsersChampCompetence2")]
+    partial class MakeUsersChampCompetence2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,9 +46,54 @@ namespace Backend.WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("is_over")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.ToTable("Championships");
+                });
+
+            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Competence", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Competence_code");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Competences");
+                });
+
+            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.CompetencesChampionships", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ChampionshipsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CompetenceId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChampionshipsId");
+
+                    b.HasIndex("CompetenceId");
+
+                    b.ToTable("CompetencesChampionships");
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Events", b =>
@@ -73,6 +118,29 @@ namespace Backend.WebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.ExpertCompetence", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CompetenceId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UsersId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompetenceId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("ExpertCompetences");
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Regions", b =>
@@ -168,6 +236,34 @@ namespace Backend.WebApi.Migrations
                     b.ToTable("Skills");
                 });
 
+            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.UsersChampionshipsCompetences", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ChampionshipsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CompetenceId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UsersId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChampionshipsId");
+
+                    b.HasIndex("CompetenceId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("UsersChampionshipsCompetences");
+                });
+
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Volunteers", b =>
                 {
                     b.Property<int>("Id")
@@ -193,55 +289,6 @@ namespace Backend.WebApi.Migrations
                     b.HasIndex("RegionCode");
 
                     b.ToTable("Volunteers");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
@@ -361,21 +408,6 @@ namespace Backend.WebApi.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
@@ -428,6 +460,44 @@ namespace Backend.WebApi.Migrations
                     b.HasDiscriminator().HasValue("Users");
                 });
 
+            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.CompetencesChampionships", b =>
+                {
+                    b.HasOne("Backend.Domain.Entities.WorkEntities.Championships", "Championships")
+                        .WithMany()
+                        .HasForeignKey("ChampionshipsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Domain.Entities.WorkEntities.Competence", "Competence")
+                        .WithMany()
+                        .HasForeignKey("CompetenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Championships");
+
+                    b.Navigation("Competence");
+                });
+
+            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.ExpertCompetence", b =>
+                {
+                    b.HasOne("Backend.Domain.Entities.WorkEntities.Competence", "Competence")
+                        .WithMany()
+                        .HasForeignKey("CompetenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Domain.Entities.WorkEntities.Users", "Users")
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Competence");
+
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Results", b =>
                 {
                     b.HasOne("Backend.Domain.Entities.WorkEntities.Championships", "Championships")
@@ -445,6 +515,33 @@ namespace Backend.WebApi.Migrations
                     b.Navigation("Users");
                 });
 
+            modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.UsersChampionshipsCompetences", b =>
+                {
+                    b.HasOne("Backend.Domain.Entities.WorkEntities.Championships", "Championships")
+                        .WithMany()
+                        .HasForeignKey("ChampionshipsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Domain.Entities.WorkEntities.Competence", "Competence")
+                        .WithMany()
+                        .HasForeignKey("CompetenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Domain.Entities.WorkEntities.Users", "Users")
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Championships");
+
+                    b.Navigation("Competence");
+
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Volunteers", b =>
                 {
                     b.HasOne("Backend.Domain.Entities.WorkEntities.Regions", "Regions")
@@ -454,15 +551,6 @@ namespace Backend.WebApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Regions");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -476,21 +564,6 @@ namespace Backend.WebApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
