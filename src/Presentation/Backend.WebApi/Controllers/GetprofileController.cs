@@ -59,5 +59,23 @@ namespace Backend.WebApi.Controllers
 
             return Ok(json.ToString());
         }
+
+        [Authorize]
+        [HttpGet("getrole")]
+        public IActionResult GetUserRole() 
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            string? role = "";
+            if (identity != null)
+            {
+                role = identity.FindFirst(ClaimTypes.Role)?.Value;
+            }
+            else
+            {
+                return NotFound("У пользователя нет claims");
+            }
+
+            return Ok(role);
+        }
     }
 }
