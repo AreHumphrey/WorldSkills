@@ -31,10 +31,10 @@ namespace Backend.WebApi.Controllers.AdminControllers
                                                  .Where(a => a.Roles.Role == "E")
                                                  .ToListAsync();
 
-            List<ExpertModel> expertModels = new List<ExpertModel>();
+            List<FullExpertModel> expertModels = new List<FullExpertModel>();
             foreach (var e in experts) 
             {
-                ExpertModel exp = new ExpertModel
+                FullExpertModel exp = new FullExpertModel
                 {
                     Id = e.Id,
                     Username = e.UserName,
