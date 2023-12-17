@@ -126,18 +126,18 @@
 <p>
 {
   "Result 1": {
-    "ChampName": "ABABA",
+    "ChampName": "Champ 2",
     "Competence": 1,
-    "ParticipantID": "117aefdf-c468-49dd-bef0-1e8f229faaab",
-    "Module": "Modules",
-    "Grade": 5.0
+    "ParticipantID": "c46b53c1-19d1-48c1-bbab-de92bd1dcbbf",
+    "Module": "10, 10",
+    "Grade": 20.0
   },
   "Result 2": {
-    "ChampName": "ABABA",
+    "ChampName": "Champ 3",
     "Competence": 2,
-    "ParticipantID": "117aefdf-c468-49dd-bef0-1e8f229faaab",
-    "Module": "Modules",
-    "Grade": 5.0
+    "ParticipantID": "c46b53c1-19d1-48c1-bbab-de92bd1dcbbf",
+    "Module": "5, 5, 10, 2, 8",
+    "Grade": 30.0
   }
 }
 </p>
@@ -147,4 +147,76 @@
 <p>Если получили NotFound("Для пользователя не найден email"), это значит, что куки пользователя не содержат его email</p>
 <p>Если получили NotFound("Пользователь не найден"), это значит, что рользователь не найден в базе данных</p>
 <p>Если получили NotFound("У пользователя нет результатов"), это значит, что для пользователя не найдены результаты</p>
+</div>
+
+# UserChampionship
+<div>
+<p>http://morderboy.ru/api/userchampionship</p>
+<p>Ok() Вернёт следующий JSON</p>
+<div>
+{
+  "ChampionshipId": "Id соревнования int",
+  "CompetenceId": "Код компетенции string"
+}
+</div>
+<p>BadRequest("Данное api рассчитано на обычных пользователей") если роль ванего юзера не U</p>
+<p>BadRequest("Токен повреждён пожалуйста войдите в систему повторно")</p>
+<p>return NotFound("Пользователь с такой почтой не найден в системе")</p>
+<p>BadRequest("Пользователь не участвует не в одном чемпионате")</p>
+</div>
+
+# ChampCompetenceExperts
+<div>
+<p>http://morderboy.ru/api/champcompetence/experts/{ChampionshipId}&{CompetenceId}</p>
+<p>Вот пример того какой адрес нужно передавать для url запроса</p>
+<p>http://morderboy.ru/api/champcompetence/experts/1&RU</p>
+<p>Здесь ChampionshipId = 1 и CompetenceId = RU их нужно передавать разделяя &</p>
+<p>Ok() Вернёт следующий список JSON-ов</p>
+<div>
+[
+  {
+    "FirstName": "Имя",
+    "LastName": "Фамилия",
+    "Gender": "Пол",
+    "Regionname": "Регион (По факту город)"
+  }
+]
+</div>
+<p>Как видно по квадратным [] скобочкам это список из JSON-ов содержащих давнный для всех эспертов для данного чемпионата в данной компетенции</p>
+<p>NotFound("Не найдено ни одного эксперта") для данного соревнования для данной компетенции нет ни одного эксперта</p>
+</div>
+
+# ChampCompetenceUsers
+<div>
+<p>http://morderboy.ru/api/champcompetence/users/{ChampionshipId}&{CompetenceId}</p>
+<p>Вот пример того какой адрес нужно передавать для url запроса</p>
+<p>http://morderboy.ru/api/champcompetence/users/1&RU</p>
+<p>Здесь ChampionshipId = 1 и CompetenceId = RU их нужно передавать разделяя &</p>
+<p>Ok() Вернёт следующий список JSON-ов</p>
+<div>
+[
+  {
+    "FirstName": "Имя",
+    "LastName": "Фамилия",
+    "Gender": "Пол",
+    "Regionname": "Регион (По факту город)"
+  }
+]
+</div>
+<p>Как видно по квадратным [] скобочкам это список из JSON-ов содержащих давнный для всех эспертов для данного чемпионата в данной компетенции</p>
+<p>NotFound("Не найдено ни одного участника") для данного соревнования для данной компетенции нет ни одного участника</p>
+</div>
+
+# ChampionshipLink
+<div>
+<p>http://morderboy.ru/api/championships/link/{champId}</p>
+<p>Вот пример того какой адрес нужно передавать для url запроса</p>
+<p>http://morderboy.ru/api/championships/link/1</p>
+<p>Здесь ChampId = 1, ChampId это Id соревнования</p>
+<p>Ok() Вернёт вам геоссылку на яндекс карту в формате string</p>
+<div>
+https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%ba+%d0%90%d1%8f%d0%ba%d1%81%2c+%d0%ba%d0%b0%d0%bc%d0%bf%d1%83%d1%81+%d0%94%d0%b0%d0%bb%d1%8c%d0%bd%d0%b5%d0%b2%d0%be%d1%81%d1%82%d0%be%d1%87%d0%bd%d0%be%d0%b3%d0%be+%d1%84%d0%b5%d0%b4%d0%b5%d1%80%d0%b0%d0%bb%d1%8c%d0%bd%d0%be%d0%b3%d0%be+%d1%83%d0%bd%d0%b8%d0%b2%d0%b5%d1%80%d1%81%d0%b8%d1%82%d0%b5%d1%82%d0%b0%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%ba+%d0%a0%d1%83%d1%81%d1%81%d0%ba%d0%b8%d0%b9
+</div>
+<p>NotFound("Неправильный id чемпионата") чемпионат не найден в бд</p>
+<p>BadRequest("Адрес не найден") у данного чемпионата отсутствует адресс</p>
 </div>
