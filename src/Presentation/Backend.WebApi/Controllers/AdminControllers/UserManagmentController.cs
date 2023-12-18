@@ -52,6 +52,9 @@ namespace Backend.WebApi.Controllers.AdminControllers
             };
 
             await _db.UsersChampionshipsCompetences.AddAsync( ucc );
+            Championships champ = await _db.Championships.FindAsync(UserCompChamp.champId);
+            champ.Members_count = champ.Members_count + 1;
+
             int rows = await _db.SaveChangesAsync();
 
             if (rows == 0) 
