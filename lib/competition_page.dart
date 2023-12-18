@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:wordskills/widgets/custom_competency_button.dart';
 import 'dart:convert';
 
+import 'competency/competency_experts.dart';
 import 'competency/competency_user.dart';
 import 'main.dart';
 
@@ -203,7 +204,7 @@ class CompetencyCriteriaPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CompetitionPage()),
+                          builder: (context) => CompetitionExperts()),
                     );
                   },
                 ),
