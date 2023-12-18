@@ -20,8 +20,6 @@ class _ResultsPageState extends State<ResultsPage> {
     fetchResults();
   }
 
-
-
   Future<void> fetchResults() async {
     if (!GlobalToken().isTokenValid()) {
       return;
@@ -153,9 +151,10 @@ class _ResultsPageState extends State<ResultsPage> {
                               Text(
                                 'Модули:\t\t  ${result['Module']}',
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: Colors.grey[700]),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.grey[700],
+                                ),
                               ),
 
                               SizedBox(height: 10),
