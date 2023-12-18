@@ -79,6 +79,13 @@ flutter:
     - assets/worldskills_info_rus_2.jpg
     - assets/icon_bear.png
     - assets/compe.png
+    - assets/clock.png
+    - assets/ex.png
+    - assets/map.png
+    - assets/mark.png
+    - assets/user.png
+    - assets/avatar_users_ex.png
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

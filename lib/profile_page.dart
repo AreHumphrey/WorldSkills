@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
-import 'package:wordskills/forgot_password/ForgotPassword.dart';
+import 'package:wordskills/forgot_password/forgot_password.dart';
 import 'dart:convert';
 
 import 'main.dart';

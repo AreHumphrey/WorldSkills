@@ -7,12 +7,15 @@ class WorldSkills_Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+
+      ),
       body: Center(
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
             Positioned(
-              top: 100,
+              top: 30,
               child: Text(
                 'О WorldSkills',
                 style: TextStyle(
