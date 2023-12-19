@@ -254,7 +254,6 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 ]
 <div>
 </div>
-</n>
 <h1>Current<h1>
 <div>
 <p>http://morderboy.ru/api/championships/championates/current</p>
@@ -274,7 +273,6 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 ]
 <div>
 </div>
-</n>
 <h1>passed<h1>
 <div>
 <p>http://morderboy.ru/api/championships/championates/passed</p>
@@ -294,7 +292,6 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 ]
 <div>
 </div>
-</n>
 <h1>Get Competences<h1>
 <div>
 <p>http://morderboy.ru/api/Championships/championates/getcompetences/{champId}</p>
