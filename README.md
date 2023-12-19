@@ -220,7 +220,7 @@
 <p>NotFound("Не найдено ни одного участника") для данного соревнования для данной компетенции нет ни одного участника</p>
 </div>
 
-# ChampionshipLink
+# Championship
 <div>
 <p>http://morderboy.ru/api/championships/link/{champId}</p>
 <p>Вот пример того какой адрес нужно передавать для url запроса</p>
@@ -232,4 +232,199 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 </div>
 <p>NotFound("Неправильный id чемпионата") чемпионат не найден в бд</p>
 <p>BadRequest("Адрес не найден") у данного чемпионата отсутствует адресс</p>
+</div>
+
+# Championhips
+<h1>Upcoming<h1>
+<div>
+<p>http://morderboy.ru/api/championships/championates/upcoming</p>
+<p>Нужна авторизация</p>
+<p>Ok() Вернёт вам список чемпионатов которые только предстоят</p>
+<div>
+[
+  {
+    "Id": 1,
+    "Members_count": 900,
+    "Title": "Champ 1",
+    "Dates": "2023-12-17T00:00:00",
+    "Place": "Place",
+    "Link": "Link",
+    "Adress": "кA, посёлок Аякс, кампус Дальневосточного федерального университета, посёлок Русский"
+  }
+]
+<div>
+</div>
+</n>
+<h1>Current<h1>
+<div>
+<p>http://morderboy.ru/api/championships/championates/current</p>
+<p>Нужна авторизация</p>
+<p>Ok() Вернёт вам список чемпионатов которые идут в данный момент</p>
+<div>
+[
+  {
+    "Id": 1,
+    "Members_count": 900,
+    "Title": "Champ 1",
+    "Dates": "2023-12-17T00:00:00",
+    "Place": "Place",
+    "Link": "Link",
+    "Adress": "кA, посёлок Аякс, кампус Дальневосточного федерального университета, посёлок Русский"
+  }
+]
+<div>
+</div>
+</n>
+<h1>passed<h1>
+<div>
+<p>http://morderboy.ru/api/championships/championates/passed</p>
+<p>Нужна авторизация</p>
+<p>Ok() Вернёт вам список чемпионатов которые уже прошли</p>
+<div>
+[
+  {
+    "Id": 1,
+    "Members_count": 900,
+    "Title": "Champ 1",
+    "Dates": "2023-12-17T00:00:00",
+    "Place": "Place",
+    "Link": "Link",
+    "Adress": "кA, посёлок Аякс, кампус Дальневосточного федерального университета, посёлок Русский"
+  }
+]
+<div>
+</div>
+</n>
+<h1>Get Competences<h1>
+<div>
+<p>http://morderboy.ru/api/Championships/championates/getcompetences/{champId}</p>
+<p>Нужна авторизация</p>
+<p>champId - Id чемпионата компетенции которого хотите получить</p>
+<p>Ok() Вернёт вам список компетенций чемпионата</p>
+<div>
+[
+  {
+    "Code": "RU",
+    "Name": "Ru lang",
+    "Description": "Description"
+  },
+  {
+    "Code": "MS",
+    "Name": "Math statistics",
+    "Description": "Description"
+  }
+]
+<div>
+</div>
+
+# ChampionshipsManagment
+<h1>Add Championship<h1>
+<div>
+<p>Это метод POST</p>
+<p>http://morderboy.ru/api/championshipsmanagment/addchampionship</p>
+<p>Нужна авторизация от Админа</p>
+<p>Ok() если удалось добавить чемпионат</p>
+<div>
+{
+  "title": "Champ 5",
+  "dates": "2023-12-18T14:36:40.127Z",
+  "place": "Place",
+  "link": "link",
+  "adress": "adress"
+}
+<div>
+<p>BadRequest("Такой чемпионат уже есть в базе")</p>
+<p>StatusCode(500, "Internal Server Error") вернёт статус код 500 если не удолось обновить бд. Для ошибки 500 необходимо просто выводить "Internal Server Error" и ничего более!!!!</p>
+</div>
+
+# Смена почты и имени
+<h1>Change email<h1>
+<div>
+<p>Это метод PATCH</p>
+<p>http://morderboy.ru/api/changeemail</p>
+<p>Нужна авторизация</p>
+<p>Ok() если удалось сменить почту</p>
+<div>
+{"email"} - отправить сюда
+<div>
+<p>NotFound("Пользователь не найден в системе")</p>
+<p>StatusCode(500, "Internal Server Error") вернёт статус код 500 если не удолось обновить бд. Для ошибки 500 необходимо просто выводить "Internal Server Error" и ничего более!!!!</p>
+</div>
+<h1>Change name<h1>
+<div>
+<p>Это метод PATCH</p>
+<p>http://morderboy.ru/api/changename</p>
+<p>Нужна авторизация</p>
+<p>Ok() если удалось сменить имя</p>
+<div>
+{
+    "firstname": "Артём",
+    "lastname": "Быков"
+}
+<div>
+<p>NotFound("Пользователь не найден в системе")</p>
+<p>StatusCode(500, "Internal Server Error") вернёт статус код 500 если не удолось обновить бд. Для ошибки 500 необходимо просто выводить "Internal Server Error" и ничего более!!!!</p>
+</div>
+
+# UserManagment
+<h1>Add user to championate to competence<h1>
+<div>
+<p>Это метод PUT</p>
+<p>http://morderboy.ru/api/usermanagment</p>
+<p>Нужна авторизация от Админа</p>
+<p>Ok() удалось добавить пользователя на чемпионат на компетенцию</p>
+<div>
+{
+  "email": "dindindina@gmail.com",
+  "champId": 4,
+  "compCode": "CS"
+}
+<div>
+<p>NotFound("Пользователь не найден в базе")</p>
+<p>BadRequest("Чемпионат уже окончен")</p>
+<p>BadRequest("Чемпионат не содержит компетенции с таким кодом")</p>
+<p>StatusCode(500, "Internal Server Error") вернёт статус код 500 если не удолось обновить бд. Для ошибки 500 необходимо просто выводить "Internal Server Error" и ничего более!!!!</p>
+</div>
+
+# ExpertManagment
+<h1>Get experts list<h1>
+<div>
+<p>Это метод Get</p>
+<p>http://morderboy.ru/api/expertmanagment</p>
+<p>Нужна авторизация от Админа</p>
+<p>Ok() вам вернут список экспертов</p>
+<div>
+[
+  {
+    "id":"885d00d0-97b7-4e2c-a4f3-cad78aec7aee",
+    "username":"chert@gmail.com",
+    "birthday":"4/3/2001 12:00:00AM",
+    "regioncode":"RF",
+    "firstName":"F",
+    "lastName":"L",
+    "gender":"Male",
+    "regionname":"Name"
+  },
+  {
+    "id":"b3147b0e-c73d-4d34-b413-c69cf4381226",
+    "username":"abobus@gmail.com",
+    "birthday":"4/3/2001 12:00:00AM",
+    "regioncode":"RF",
+    "firstName":"F",
+    "lastName":"L",
+    "gender":"Male",
+    "regionname":"Name"
+  }
+]
+<div>
+</div>
+<h1>Delete expert (Ещё не доработано ни в коме случае не использовать!!!!!!)<h1>
+<div>
+<p>Это метод DELETE</p>
+<p>http://morderboy.ru/api/expertmanagment</p>
+<p>Нужна авторизация от Админа</p>
+<p>Ok() если эксперт был успешно удалён</p>
+<div>
+[{"id"}] - сюда необходимо передавать список id для удаления
+<div>
 </div>
