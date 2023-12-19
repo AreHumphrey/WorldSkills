@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System.Security.Claims;
 
 namespace Backend.WebApi.Controllers.AdminControllers
@@ -21,6 +23,37 @@ namespace Backend.WebApi.Controllers.AdminControllers
         {
             _db = db;
             _userManager = userManager;
+        }
+
+        [Authorize(Roles = "A")]
+        [HttpGet]
+        public async Task<IActionResult> RegistrateToChampionship()
+        {
+            List<Users>? users = await _db.Users.Include(a => a.Regions).Include(a => a.Roles).ToListAsync();
+            if (users.IsNullOrEmpty()) 
+            {
+                return NotFound("Ни одного пользователя не найдено в системе");
+            }
+
+            JArray jArray = new JArray();
+            foreach (var user in users) 
+            {
+                AdminUserToJSON userJSON = new AdminUserToJSON
+                {
+                    IdNumber = user.Id,
+                    Email = user.UserName,
+                    Name = user.FirstName + " " + user.LastName,
+                    Gender = user.Gender,
+                    Area = user.Regions.Area,
+                    Region = user.Regions.Name,
+                    RoleName = user.Roles.Role
+                };
+
+                JObject userJOBJ = JObject.FromObject(userJSON);
+                jArray.Add(userJOBJ);
+            }
+
+            return Ok(jArray.ToString());
         }
 
         [Authorize(Roles = "A")]

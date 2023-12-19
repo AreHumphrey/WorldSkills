@@ -85,7 +85,7 @@
 <p>Если получили в ответ Ok, то всё ок и вам вернут JSON</p>
 <p>
 {
-    Name: "Имя пользователя",
+    Name: "Имя пользователя полное",
     Gender: "Пол",
     IdNumber: "ID пользователя в бд",
     Region: "Город",
@@ -385,6 +385,27 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 <p>BadRequest("Чемпионат не содержит компетенции с таким кодом")</p>
 <p>StatusCode(500, "Internal Server Error") вернёт статус код 500 если не удолось обновить бд. Для ошибки 500 необходимо просто выводить "Internal Server Error" и ничего более!!!!</p>
 </div>
+<h1>Get list of users<h1>
+<div>
+<p>Это метод GET</p>
+<p>http://morderboy.ru/api/usermanagment</p>
+<p>Нужна авторизация от Админа</p>
+<p>Ok() Спрсок всех пользователей</p>
+<div>
+[
+  {
+    "RoleName": "A",
+    "Email": "slava137267@gmail.com",
+    "Name": "Слава Трегубов",
+    "Gender": "Male",
+    "IdNumber": "7fe28520-d3ef-4fba-a459-f3d4637d8f50",
+    "Region": "Name",
+    "Area": "RF"
+  }
+]
+<div>
+<p>NotFound("Ни одного пользователя не найдено в системе")</p>
+</div>
 
 # ExpertManagment
 <h1>Get experts list<h1>
@@ -425,6 +446,20 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 <p>Нужна авторизация от Админа</p>
 <p>Ok() если эксперт был успешно удалён</p>
 <div>
-[{"id"}] - сюда необходимо передавать список id для удаления
+["id1", "id2"] - сюда необходимо передавать список id для удаления
 <div>
+</div>
+</div>
+<h1>Add to Experts<h1>
+<div>
+<p>Это метод PATCH</p>
+<p>http://morderboy.ru/api/expertmanagment/addtoexperts</p>
+<p>Нужна авторизация от Админа</p>
+<p>Ok() всем пользователям были разданы роли экспертов</p>
+<div>
+["id1", "id2"] - сюда необходимо передавать список id для удаления
+<div>
+<p>BadRequest("Неправильный id: " + id)</p>
+<p>StatusCode(500, "Internail server errror") ошибка в бд</p>
+<p>StatusCode(500, "Internail server errror on user with id: " + id)</p>
 </div>

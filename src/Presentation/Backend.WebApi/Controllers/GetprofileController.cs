@@ -48,7 +48,7 @@ namespace Backend.WebApi.Controllers
 
             UserToJSON userToJSON = new UserToJSON
             {
-                Name = user.FirstName,
+                Name = user.FirstName + " " + user.LastName,
                 Gender = user.Gender,
                 IdNumber = user.Id,
                 Region = region.Name,

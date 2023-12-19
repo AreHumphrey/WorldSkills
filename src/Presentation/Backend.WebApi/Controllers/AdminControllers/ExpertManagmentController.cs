@@ -69,5 +69,35 @@ namespace Backend.WebApi.Controllers.AdminControllers
 
             return Ok();
         }
+
+        [HttpPatch("addtoexperts")]
+        [Authorize(Roles = "A")]
+
+        public async Task<IActionResult> AddExpert([FromBody] List<string> ids)
+        {
+            foreach (var id in ids)
+            {
+                Users? user = await _userManager.FindByIdAsync(id);
+                if (user == null) 
+                {
+                    return BadRequest("Неправильный id: " + id);
+                }
+
+                user.Roles = await _db.Roles.Where(a => a.Role == "E").FirstOrDefaultAsync();
+
+                if (user.Roles == null) 
+                {
+                    return StatusCode(500, "Internail server errror");
+                }
+
+                var result = await _userManager.UpdateAsync(user);
+                if (!result.Succeeded) 
+                {
+                    return StatusCode(500, "Internail server errror on user with id: " + id);
+                }
+            }
+
+            return Ok();
+        }
     }
 }
