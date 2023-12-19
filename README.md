@@ -393,6 +393,7 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 <p>NotFound("Пользователь не найден в базе")</p>
 <p>BadRequest("Чемпионат уже окончен")</p>
 <p>BadRequest("Чемпионат не содержит компетенции с таким кодом")</p>
+<p>BadRequest("Пользователь уже зарегестрирован на данном чемпионате")</p>
 <p>StatusCode(500, "Internal Server Error") вернёт статус код 500 если не удолось обновить бд. Для ошибки 500 необходимо просто выводить "Internal Server Error" и ничего более!!!!</p>
 </div>
 <h1>Get list of users</h1>
@@ -474,12 +475,31 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 <p>StatusCode(500, "Internail server errror") ошибка в бд</p>
 <p>StatusCode(500, "Internail server errror on user with id: " + id)</p>
 </div>
+<h1>Add Expert to championate competence</h1>
+<div>
+<p>Это метод PATCH</p>
+<p>http://morderboy.ru/api/ExpertManagment/addtochampionatecompetence</p>
+<p>Нужна авторизация от Админа</p>
+<p>Ok() эксперт добавлен на компетенцию чемпионата</p>
+<div>
+{
+  "email": "artemius@gmail.com",
+  "champId": 1,
+  "compCode": "RU"
+}
+<div>
+<p>NotFound("Пользователь не найден в базе")</p>
+<p>BadRequest("Данный пользователь не является экспертом")</p>
+<p>BadRequest("Чемпионат уже окончен")</p>
+<p>BadRequest("Чемпионат не содержит компетенции с таким кодом")</p>
+<p>StatusCode(500, "Internal Server Error")</p>
+</div>
 
 # Competences
 <h1>Get List of Competences</h1>
 <div>
 <p>Это метод Get</p>
-<p>http://localhost:5125/api/competences</p>
+<p>http://morderboy.ru/api/competences</p>
 <p>Нужна авторизация от Админа</p>
 <p>Ok() восвращает список со всеми компетенциями</p>
 <div>
@@ -501,7 +521,7 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 <h1>Add Competence</h1>
 <div>
 <p>Это метод POST</p>
-<p>http://localhost:5125/api/competences</p>
+<p>http://morderboy.ru/api/competences</p>
 <p>Нужна авторизация от Админа</p>
 <p>Ok() если всё Ok</p>
 <div>

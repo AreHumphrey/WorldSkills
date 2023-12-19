@@ -104,5 +104,52 @@ namespace Backend.WebApi.Controllers.AdminControllers
 
             return Ok();
         }
+
+        [Authorize(Roles = "A")]
+        [HttpPut("addtochampionatecompetence")]
+        public async Task<IActionResult> AddExpertToCompetence([FromBody] AddUserToChampionateModel ExpertCompChamp) 
+        {
+            Users? user = await _db.Users.Where(a => a.UserName == ExpertCompChamp.email)
+                                         .Include(a => a.Roles)
+                                         .FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return NotFound("Пользователь не найден в базе");
+            }
+
+            if (user.Roles.Role != "E") 
+            {
+                return BadRequest("Данный пользователь не является экспертом");
+            }
+
+            if (await _db.Championships.AnyAsync(a => a.Id == ExpertCompChamp.champId && a.is_over))
+            {
+                return BadRequest("Чемпионат уже окончен");
+            }
+
+            if (!await _db.CompetencesChampionships.AnyAsync(a => a.CompetenceId == ExpertCompChamp.compCode
+            && a.ChampionshipsId == ExpertCompChamp.champId))
+            {
+                return BadRequest("Чемпионат не содержит компетенции с таким кодом");
+            }
+
+            UsersChampionshipsCompetences ucc = new UsersChampionshipsCompetences
+            {
+                UsersId = user.Id,
+                CompetenceId = ExpertCompChamp.compCode,
+                ChampionshipsId = ExpertCompChamp.champId
+            };
+
+            await _db.UsersChampionshipsCompetences.AddAsync(ucc);
+
+            int rows = await _db.SaveChangesAsync();
+
+            if (rows == 0)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+
+            return Ok();
+        }
     }
 }

@@ -77,6 +77,11 @@ namespace Backend.WebApi.Controllers.AdminControllers
                 return BadRequest("Чемпионат не содержит компетенции с таким кодом");
             }
 
+            if (!await _db.UsersChampionshipsCompetences.AnyAsync(a => a.UsersId == user.Id))
+            {
+                return BadRequest("Пользователь уже зарегестрирован на данном чемпионате");
+            }
+
             UsersChampionshipsCompetences ucc = new UsersChampionshipsCompetences
             {
                 UsersId = user.Id,
