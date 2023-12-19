@@ -235,7 +235,7 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 </div>
 
 # Championhips
-<h1>Upcoming<h1>
+<h1>Upcoming</h1>
 <div>
 <p>http://morderboy.ru/api/championships/championates/upcoming</p>
 <p>Нужна авторизация</p>
@@ -254,7 +254,7 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 ]
 <div>
 </div>
-<h1>Current<h1>
+<h1>Current</h1>
 <div>
 <p>http://morderboy.ru/api/championships/championates/current</p>
 <p>Нужна авторизация</p>
@@ -273,7 +273,7 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 ]
 <div>
 </div>
-<h1>passed<h1>
+<h1>passed</h1>
 <div>
 <p>http://morderboy.ru/api/championships/championates/passed</p>
 <p>Нужна авторизация</p>
@@ -292,7 +292,7 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 ]
 <div>
 </div>
-<h1>Get Competences<h1>
+<h1>Get Competences</h1>
 <div>
 <p>http://morderboy.ru/api/Championships/championates/getcompetences/{champId}</p>
 <p>Нужна авторизация</p>
@@ -315,7 +315,7 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 </div>
 
 # ChampionshipsManagment
-<h1>Add Championship<h1>
+<h1>Add Championship</h1>
 <div>
 <p>Это метод POST</p>
 <p>http://morderboy.ru/api/championshipsmanagment/addchampionship</p>
@@ -335,7 +335,7 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 </div>
 
 # Смена почты и имени
-<h1>Change email<h1>
+<h1>Change email</h1>
 <div>
 <p>Это метод PATCH</p>
 <p>http://morderboy.ru/api/changeemail</p>
@@ -347,7 +347,7 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 <p>NotFound("Пользователь не найден в системе")</p>
 <p>StatusCode(500, "Internal Server Error") вернёт статус код 500 если не удолось обновить бд. Для ошибки 500 необходимо просто выводить "Internal Server Error" и ничего более!!!!</p>
 </div>
-<h1>Change name<h1>
+<h1>Change name</h1>
 <div>
 <p>Это метод PATCH</p>
 <p>http://morderboy.ru/api/changename</p>
@@ -364,7 +364,7 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 </div>
 
 # UserManagment
-<h1>Add user to championate to competence<h1>
+<h1>Add user to championate to competence</h1>
 <div>
 <p>Это метод PUT</p>
 <p>http://morderboy.ru/api/usermanagment</p>
@@ -382,7 +382,7 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 <p>BadRequest("Чемпионат не содержит компетенции с таким кодом")</p>
 <p>StatusCode(500, "Internal Server Error") вернёт статус код 500 если не удолось обновить бд. Для ошибки 500 необходимо просто выводить "Internal Server Error" и ничего более!!!!</p>
 </div>
-<h1>Get list of users<h1>
+<h1>Get list of users</h1>
 <div>
 <p>Это метод GET</p>
 <p>http://morderboy.ru/api/usermanagment</p>
@@ -405,7 +405,7 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 </div>
 
 # ExpertManagment
-<h1>Get experts list<h1>
+<h1>Get experts list</h1>
 <div>
 <p>Это метод Get</p>
 <p>http://morderboy.ru/api/expertmanagment</p>
@@ -436,7 +436,7 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 ]
 <div>
 </div>
-<h1>Delete expert (Ещё не доработано ни в коме случае не использовать!!!!!!)<h1>
+<h1>Delete expert (Ещё не доработано ни в коме случае не использовать!!!!!!)</h1>
 <div>
 <p>Это метод DELETE</p>
 <p>http://morderboy.ru/api/expertmanagment</p>
