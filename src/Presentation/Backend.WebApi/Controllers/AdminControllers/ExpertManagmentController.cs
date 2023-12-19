@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Backend.WebApi.Controllers.AdminControllers
 {
@@ -30,6 +31,10 @@ namespace Backend.WebApi.Controllers.AdminControllers
                                                  .Include(a => a.Regions)
                                                  .Where(a => a.Roles.Role == "E")
                                                  .ToListAsync();
+            if (experts.IsNullOrEmpty()) 
+            {
+                return NotFound("Ни одного эксперта не найдено");
+            }
 
             List<FullExpertModel> expertModels = new List<FullExpertModel>();
             foreach (var e in experts) 
