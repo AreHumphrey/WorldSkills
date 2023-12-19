@@ -435,6 +435,7 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
   }
 ]
 <div>
+<p>NotFound("Ни одного эксперта не найдено")</p>
 </div>
 <h1>Delete expert (Ещё не доработано ни в коме случае не использовать!!!!!!)</h1>
 <div>
@@ -447,7 +448,7 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 <div>
 </div>
 </div>
-<h1>Add to Experts<h1>
+<h1>Add to Experts</h1>
 <div>
 <p>Это метод PATCH</p>
 <p>http://morderboy.ru/api/expertmanagment/addtoexperts</p>
