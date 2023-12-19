@@ -69,7 +69,7 @@ namespace Backend.WebApi.Controllers
             CompetenceChampionshipModel initmodel = new CompetenceChampionshipModel
             {
                 ChampionshipId = userchamp.ChampionshipsId,
-                CompetenceId = userchamp.CompetenceId
+                CompetenceId = userchamp.CompetenceId,
             };
 
             JObject json = JObject.FromObject(initmodel);

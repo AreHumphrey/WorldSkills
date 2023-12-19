@@ -1,5 +1,6 @@
 ﻿using Backend.Domain.Entities.WorkEntities;
 using Backend.Persistence.Context;
+using Backend.WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -23,7 +24,7 @@ namespace Backend.WebApi.Controllers
 
         [Authorize]
         [HttpPatch]
-        public async Task<IActionResult> Changeemail([FromBody] string newEmail) 
+        public async Task<IActionResult> Changeemail([FromBody] EmailModel newEmail) 
         {
             string? currEmail = "";
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -35,7 +36,7 @@ namespace Backend.WebApi.Controllers
                 return NotFound("Пользователь не найден в системе");
             }
 
-            user.UserName = newEmail;
+            user.UserName = newEmail.Email;
 
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded) 

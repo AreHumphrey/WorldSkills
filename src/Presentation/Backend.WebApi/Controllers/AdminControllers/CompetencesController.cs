@@ -1,5 +1,6 @@
 ﻿using Backend.Domain.Entities.WorkEntities;
 using Backend.Persistence.Context;
+using Backend.WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +40,32 @@ namespace Backend.WebApi.Controllers.AdminControllers
             }
 
             return Ok(jArray.ToString());
+        }
+
+        [Authorize(Roles = "A")]
+        [HttpPost]
+        public async Task<IActionResult> AddCompetences([FromBody] CompetenceViewModel competenceView)
+        {
+            if (await _db.Competences.AnyAsync(a => a.Id == competenceView.Code)) 
+            {
+                return BadRequest("Компетенция с таким кодом уже находтся в базе данных");
+            }
+
+            Competence comp = new Competence
+            {
+                Id = competenceView.Code,
+                Name = competenceView.Name,
+                Description = competenceView.Description
+            };
+
+            await _db.Competences.AddAsync(comp);
+            int rows = await _db.SaveChangesAsync();
+            if (rows == 0) 
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+
+            return Ok();
         }
     }
 }

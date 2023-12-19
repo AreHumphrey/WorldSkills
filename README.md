@@ -313,6 +313,19 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 ]
 <div>
 </div>
+<h1>Get Name</h1>
+<div>
+<p>http://morderboy.ru/api/Championships/championates/getname/{champId}</p>
+<p>Нужна авторизация</p>
+<p>champId - Id чемпионата компетенции которого хотите получить</p>
+<p>Ok() Вернёт вам имя чемпионата</p>
+<div>
+{
+  "name": "Champ 1"
+}
+<div>
+<p>NotFound("В системе нет чемпионата с таким Id")</p>
+</div>
 
 # ChampionshipsManagment
 <h1>Add Championship</h1>
@@ -342,7 +355,7 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 <p>Нужна авторизация</p>
 <p>Ok() если удалось сменить почту</p>
 <div>
-{"email"} - отправить сюда
+  {"email": "email"} - отправить сюда
 <div>
 <p>NotFound("Пользователь не найден в системе")</p>
 <p>StatusCode(500, "Internal Server Error") вернёт статус код 500 если не удолось обновить бд. Для ошибки 500 необходимо просто выводить "Internal Server Error" и ничего более!!!!</p>
@@ -460,4 +473,44 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 <p>BadRequest("Неправильный id: " + id)</p>
 <p>StatusCode(500, "Internail server errror") ошибка в бд</p>
 <p>StatusCode(500, "Internail server errror on user with id: " + id)</p>
+</div>
+
+# Competences
+<h1>Get List of Competences</h1>
+<div>
+<p>Это метод Get</p>
+<p>http://localhost:5125/api/competences</p>
+<p>Нужна авторизация от Админа</p>
+<p>Ok() восвращает список со всеми компетенциями</p>
+<div>
+[
+  {
+    "Id": "RU",
+    "Name": "Ru lang",
+    "Description": "Description"
+  },
+  {
+    "Id": "MC",
+    "Name": "Math Calculus",
+    "Description": "Description"
+  }
+]
+<div>
+<p>NotFound("Не найдено ни одной компетенции")</p>
+</div>
+<h1>Add Competence</h1>
+<div>
+<p>Это метод POST</p>
+<p>http://localhost:5125/api/competences</p>
+<p>Нужна авторизация от Админа</p>
+<p>Ok() если всё Ok</p>
+<div>
+{
+    "Code": "AR",
+    "Name": "Augmented Reality",
+    "Description": "Augmented Reality"
+}
+<div>
+<p>BadRequest("Компетенция с таким кодом уже находтся в базе данных")</p>
+<p>StatusCode(500, "Internal Server Error")</p>
 </div>

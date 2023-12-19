@@ -163,5 +163,21 @@ namespace Backend.WebApi.Controllers
 
             return Ok(jArray.ToString());
         }
+
+        [Authorize]
+        [HttpGet("championates/getname/{champId}")]
+        public async Task<IActionResult> GetChampionshipName(int champId)
+        {
+            Championships championship = await _db.Championships.Where(a => a.Id == champId).FirstOrDefaultAsync();
+            if (championship == null)
+            {
+                return NotFound("В системе нет чемпионата с таким Id");
+            }
+
+            JObject json = new JObject();
+            json["name"] = championship.Title;
+
+            return Ok(json.ToString());
+        }
     }
 }
