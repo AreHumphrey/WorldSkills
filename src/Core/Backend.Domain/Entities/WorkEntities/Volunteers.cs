@@ -8,8 +8,9 @@ namespace Backend.Domain.Entities.WorkEntities
 		public required string FirstName { get; set; }
 		public required string LastName { get; set;}
 
-		[ForeignKey("RegionCode")]
-		public Regions Regions { get; set; }
+        [ForeignKey("RegionsId")]
+        public required int RegionsId { get; set; }
+        public Regions? Regions { get; set; }
 
 		public string? Gender { get; set; }
 

@@ -21,6 +21,7 @@ namespace Backend.Persistence.Context
 		public DbSet<ExpertCompetence> ExpertCompetences { get; set; }
 		public DbSet<UsersChampionshipsCompetences> UsersChampionshipsCompetences { get; set; }
 		public DbSet<CompetencesChampionships> CompetencesChampionships { get; set; }
+		public DbSet<VolunteersChampionshipsCompetences> VolunteersChampionshipsCompetences { get; set; }
 		public ApplicaitonDbContext(DbContextOptions<ApplicaitonDbContext> options) : base(options)
 		{
 

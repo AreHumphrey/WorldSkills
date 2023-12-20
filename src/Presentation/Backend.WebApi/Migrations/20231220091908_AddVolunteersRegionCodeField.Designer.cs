@@ -3,6 +3,7 @@ using System;
 using Backend.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.WebApi.Migrations
 {
     [DbContext(typeof(ApplicaitonDbContext))]
-    partial class ApplicaitonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231220091908_AddVolunteersRegionCodeField")]
+    partial class AddVolunteersRegionCodeField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.14");
@@ -48,7 +51,7 @@ namespace Backend.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Championships", (string)null);
+                    b.ToTable("Championships");
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Competence", b =>
@@ -68,7 +71,7 @@ namespace Backend.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Competences", (string)null);
+                    b.ToTable("Competences");
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.CompetencesChampionships", b =>
@@ -90,7 +93,7 @@ namespace Backend.WebApi.Migrations
 
                     b.HasIndex("CompetenceId");
 
-                    b.ToTable("CompetencesChampionships", (string)null);
+                    b.ToTable("CompetencesChampionships");
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Events", b =>
@@ -114,7 +117,7 @@ namespace Backend.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Events", (string)null);
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.ExpertCompetence", b =>
@@ -137,7 +140,7 @@ namespace Backend.WebApi.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("ExpertCompetences", (string)null);
+                    b.ToTable("ExpertCompetences");
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Regions", b =>
@@ -158,7 +161,7 @@ namespace Backend.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Regions", (string)null);
+                    b.ToTable("Regions");
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Results", b =>
@@ -191,7 +194,7 @@ namespace Backend.WebApi.Migrations
 
                     b.HasIndex("User_id");
 
-                    b.ToTable("Results", (string)null);
+                    b.ToTable("Results");
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Roles", b =>
@@ -209,7 +212,7 @@ namespace Backend.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Skills", b =>
@@ -230,7 +233,7 @@ namespace Backend.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Skills", (string)null);
+                    b.ToTable("Skills");
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.UsersChampionshipsCompetences", b =>
@@ -258,7 +261,7 @@ namespace Backend.WebApi.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("UsersChampionshipsCompetences", (string)null);
+                    b.ToTable("UsersChampionshipsCompetences");
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.Volunteers", b =>
@@ -278,6 +281,10 @@ namespace Backend.WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("RegionCode")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("RegionCode");
+
                     b.Property<int>("RegionsId")
                         .HasColumnType("INTEGER");
 
@@ -285,7 +292,7 @@ namespace Backend.WebApi.Migrations
 
                     b.HasIndex("RegionsId");
 
-                    b.ToTable("Volunteers", (string)null);
+                    b.ToTable("Volunteers");
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.WorkEntities.VolunteersChampionshipsCompetences", b =>
@@ -312,7 +319,7 @@ namespace Backend.WebApi.Migrations
 
                     b.HasIndex("VolunteerId");
 
-                    b.ToTable("VolunteersChampionshipsCompetences", (string)null);
+                    b.ToTable("VolunteersChampionshipsCompetences");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
