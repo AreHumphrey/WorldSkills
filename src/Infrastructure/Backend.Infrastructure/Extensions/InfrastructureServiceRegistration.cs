@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Http;
 using JavaScriptEngineSwitcher.ChakraCore;
 using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
 using React.AspNet;
+using Backend.Infrastructure.ExportFile;
+using Microsoft.AspNetCore.Hosting;
 
 
 namespace Backend.Infrastructure.Extensions
@@ -15,12 +17,15 @@ namespace Backend.Infrastructure.Extensions
 	{
 		// Bu projede kullanacağınız servisleri IoC mekanizmasına ekleyecek olan fonksiyondur.
 		// This is the function that will add the services you will use in this project to the IoC mechanism.
-		public static IServiceCollection AddInfrastructureServiceRegistration(this IServiceCollection services, IConfiguration configuration)
+		public static IServiceCollection AddInfrastructureServiceRegistration
+            (this IServiceCollection services,
+            IConfiguration configuration)
 		{
 			services.AddEmailSender();
             services.AddJwt(configuration);
             services.AddMyCors();
             services.AddMyReact();
+            services.AddFiles();
 
             return services;
 		}
@@ -28,6 +33,7 @@ namespace Backend.Infrastructure.Extensions
 		public static IServiceCollection AddEmailSender(this IServiceCollection services)
 		{
 			services.AddTransient<IEmailSender, EmailSender>();
+
 			return services;
 		}
 
@@ -36,7 +42,7 @@ namespace Backend.Infrastructure.Extensions
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    string s = configuration["Jwt:Key"];
+                    string? s = configuration["Jwt:Key"];
                     if (s == null)
                         s = "morderboy.ru";
 
@@ -80,6 +86,25 @@ namespace Backend.Infrastructure.Extensions
             services.AddReact();
             services.AddJsEngineSwitcher(options => options.DefaultEngineName = ChakraCoreJsEngine.EngineName)
                 .AddChakraCore();
+
+            return services;
+        }
+
+        private static IServiceCollection AddFiles (this IServiceCollection services) 
+        {
+            services.AddSingleton<IExportFile, ExportSMP>(provider =>
+            {
+                var webHostEnvironment = provider.GetRequiredService<IWebHostEnvironment>();
+                return new ExportSMP(webHostEnvironment);
+            });
+
+            services.AddSingleton<IExportFile, ExportCompetenceInfrastructure>(provider =>
+            {
+                var webHostEnvironment = provider.GetRequiredService<IWebHostEnvironment>();
+                return new ExportCompetenceInfrastructure(webHostEnvironment);
+            });
+
+            services.AddTransient<IExportFileFactory, ExportFileFactory>();
 
             return services;
         }
