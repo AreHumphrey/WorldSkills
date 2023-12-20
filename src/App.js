@@ -1,19 +1,34 @@
-import Header from './components/header/Header';
-import Promo1 from './components/promo/promo1';
-import Promo2 from './components/promo2/promo2';
-import Promo3 from './components/promo3/promo3';
-import Bottom from './components/bottom/bottom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './components/login/login';
+import HomePage from './HomePage';
+import Reg from './components/reg/reg';
+import User from './components/user/user';
+import Myprofile from './components/myprofile/myprofile';
+import Myresult from './components/myresult/myresult';
+
+
+
+
 
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <Promo1 />
-      <Promo2 />
-      <Promo3 />
-      <Bottom />
+      
+      
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registration" element={<Reg />} />
+          <Route path="/user" element={<User />} />
+          <Route path="/profile" element={<Myprofile />} />
+          <Route path="/result" element={<Myresult />} />
+        </Routes>
+      </Router>
     </div>
+    
   )
     
 }

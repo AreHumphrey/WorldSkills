@@ -13,7 +13,7 @@ function Header () {
                         <li><a href="#promo-content">О WorldSkills</a></li>
                         <li><a href="#promo-content2">O WorldSkills Russia</a></li>
                         <li><a href='#promo-content3'>О Краснодарском крае</a></li>
-                        <li><a href='#!'>Войти</a></li>
+                        <li><a href='/login'>Войти</a></li>
 
                     </ul>
                 </nav>
