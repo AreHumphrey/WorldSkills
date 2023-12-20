@@ -19,6 +19,7 @@ class GlobalChampion {
 
   String competenceId = '';
   int championshipId = 0;
+  String championName = '';
 }
 
 
@@ -52,7 +53,10 @@ class _CompetitionPageState extends State<CompetitionPage> {
         setState(() {
           GlobalChampion().championshipId = data['ChampionshipId'];
           GlobalChampion().competenceId = data['CompetenceId'];
+          int championshipId = GlobalChampion().championshipId;
+          fetchChampionName(championshipId);
         });
+        print(GlobalChampion().championshipId);
       } else if (response.statusCode == 400) {
         var errorData = json.decode(response.body);
 
@@ -62,6 +66,36 @@ class _CompetitionPageState extends State<CompetitionPage> {
       }
     } catch (error) {
       print('Error fetching data: $error');
+    }
+  }
+
+  void fetchChampionName(int championshipId) async {
+
+    String url = 'http://morderboy.ru/api/Championships/championates/getname/${championshipId}';
+
+    print(GlobalChampion().championshipId);
+
+    Map<String, String> headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      print(url);
+      print(GlobalChampion().championshipId);
+      http.Response response = await http.get(Uri.parse(url), headers: headers);
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        setState(() {
+          GlobalChampion().championName = data['name'];
+        });
+      } else if (response.statusCode == 404) {
+        print('Чемпионат с указанным ID не найден.');
+      } else {
+        print('Ошибка получения имени чемпиона: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Ошибка при выполнении запроса: $error');
     }
   }
 
@@ -96,11 +130,11 @@ class _CompetitionPageState extends State<CompetitionPage> {
             ),
             SizedBox(height: 20),
             Text(
-              GlobalChampion().championshipId != 0
-                  ? '${globalChampion.championshipId}'
+              GlobalChampion().championName != 0
+                  ? '${GlobalChampion().championName}'
                   : 'Вы не участвуете в чемпионате',
               style: TextStyle(
-                fontSize: GlobalChampion().championshipId != 0 ? 60 : 20,
+                fontSize: GlobalChampion().championName != 0 ? 60 : 20,
                 color: Color(0xFFB0183D),
                 fontWeight: FontWeight.bold,
               ),

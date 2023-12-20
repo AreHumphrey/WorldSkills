@@ -10,14 +10,16 @@ import 'forgot_password.dart';
 
 Future<String> sendEmail(String token, String newEmail) async {
   final url = Uri.parse('http://morderboy.ru/api/changeemail');
-  final Map<String, String> requestBody = {'newEmail': newEmail};
+  final Map<String, String> requestBody = {'email': newEmail};
   final response = await http.patch(
     url,
     headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
     },
-    body: newEmail,
+    body: jsonEncode({
+      'email': newEmail
+    }),
   );
 
   if (response.statusCode == 200) {
