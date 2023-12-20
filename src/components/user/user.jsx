@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 const User = () => {
   const [username, setUsername] = useState('');
   const [userRole, setUserRole] = useState('');
-  
+
   const location = useLocation();
   const [token, setToken] = useState(location.state.token || '');
 
@@ -38,13 +38,21 @@ const User = () => {
     navigate('/result', { state: { token } });
   };
 
+  const handleUserManage = () => {
+    navigate('/usermanage', { state: { token } });
+  };
+
+  const handleChampionships = () => {
+    navigate('/championships', { state: { token } });
+  };
+
 
   useEffect(() => {
     const fetchUsername = async () => {
       try {
         const response = await fetch('http://morderboy.ru/api/getname', {
           headers: {
-            Authorization: `Bearer ${token}` 
+            Authorization: `Bearer ${token}`
           }
         });
 
@@ -72,7 +80,7 @@ const User = () => {
             Authorization: `Bearer ${token}`
           }
         });
-    
+
         if (response.ok) {
           const data = await response.text();
           setUserRole(data);  // Устанавливаем полученную роль в состояние userRole
@@ -85,7 +93,7 @@ const User = () => {
         console.error(error);
       }
     };
-    
+
     fetchUserRole();
 
   }, [token]);
@@ -93,13 +101,13 @@ const User = () => {
   return (
     <div className='container_profile'>
 
-            <div className="user_row">
-                <div className="user_logo">
-                    <img src={Log} alt='Logo'/>
-                </div>
-                <h1>WorldSkills Russia</h1>
-                <button onClick={handleLogout}>Выйти</button>
-            </div>
+      <div className="user_row">
+        <div className="user_logo">
+          <img src={Log} alt='Logo' />
+        </div>
+        <h1>WorldSkills Russia</h1>
+        <button onClick={handleLogout}>Выйти</button>
+      </div>
 
       {/* <button id='btn_back'>Назад</button>
       <button id='btn_quit'>Выйти</button> */}
@@ -110,7 +118,7 @@ const User = () => {
           <p>{greeting},
             Ms/Mrs {username}!</p>
           <div className='control_btns'>
-          <button onClick={handleMyProfileClick}>Мой профиль</button><br></br>
+            <button onClick={handleMyProfileClick}>Мой профиль</button><br></br>
             <button id='btn_competention'>Моя компетенция</button><br></br>
             <button onClick={handleMyResultClick}>Мои результаты</button>
           </div>
@@ -136,8 +144,8 @@ const User = () => {
           <p>{greeting},
             Ms/Mrs {username}!</p>
           <div className='control_btns'>
-            <button id='btn_champ_manage'>Управление чемпионатами</button><br></br>
-            <button id='btn_members_manage'>Управление участниками</button>
+            <button onClick={handleChampionships} id='btn_champ_manage'>Управление чемпионатами</button><br></br>
+            <button onClick={handleUserManage} id='btn_members_manage'>Управление участниками</button>
           </div>
         </div>
       )}

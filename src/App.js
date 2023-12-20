@@ -6,6 +6,8 @@ import Reg from './components/reg/reg';
 import User from './components/user/user';
 import Myprofile from './components/myprofile/myprofile';
 import Myresult from './components/myresult/myresult';
+import UserManage from './components/usermanage/usermanage';
+import Championships from './components/championships/champs';
 
 
 
@@ -25,6 +27,8 @@ function App() {
           <Route path="/user" element={<User />} />
           <Route path="/profile" element={<Myprofile />} />
           <Route path="/result" element={<Myresult />} />
+          <Route path="/usermanage" element={<UserManage />} />
+          <Route path="/championships" element={<Championships />} />
         </Routes>
       </Router>
     </div>
