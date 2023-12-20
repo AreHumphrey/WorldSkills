@@ -92,13 +92,13 @@ namespace Backend.Infrastructure.Extensions
 
         private static IServiceCollection AddFiles (this IServiceCollection services) 
         {
-            services.AddSingleton<IExportFile, ExportSMP>(provider =>
+            services.AddTransient<IExportFile, ExportSMP>(provider =>
             {
                 var webHostEnvironment = provider.GetRequiredService<IWebHostEnvironment>();
                 return new ExportSMP(webHostEnvironment);
             });
 
-            services.AddSingleton<IExportFile, ExportCompetenceInfrastructure>(provider =>
+            services.AddTransient<IExportFile, ExportCompetenceInfrastructure>(provider =>
             {
                 var webHostEnvironment = provider.GetRequiredService<IWebHostEnvironment>();
                 return new ExportCompetenceInfrastructure(webHostEnvironment);
