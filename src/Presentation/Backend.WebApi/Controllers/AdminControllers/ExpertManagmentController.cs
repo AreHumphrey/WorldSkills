@@ -107,7 +107,8 @@ namespace Backend.WebApi.Controllers.AdminControllers
 
         [Authorize(Roles = "A")]
         [HttpPut("addtochampionatecompetence")]
-        public async Task<IActionResult> AddExpertToCompetence([FromBody] AddUserToChampionateModel ExpertCompChamp) 
+        public async Task<IActionResult> AddExpertToCompetenceOfChampionate
+            ([FromBody] AddUserToChampionateModel ExpertCompChamp) 
         {
             Users? user = await _db.Users.Where(a => a.UserName == ExpertCompChamp.email)
                                          .Include(a => a.Roles)
@@ -140,11 +141,18 @@ namespace Backend.WebApi.Controllers.AdminControllers
                 ChampionshipsId = ExpertCompChamp.champId
             };
 
+            ExpertCompetence expertCompetence = new ExpertCompetence
+            {
+                UsersId = user.Id,
+                CompetenceId = ExpertCompChamp.compCode,
+            };
+
             await _db.UsersChampionshipsCompetences.AddAsync(ucc);
+            await _db.ExpertCompetences.AddAsync(expertCompetence);
 
             int rows = await _db.SaveChangesAsync();
 
-            if (rows == 0)
+            if (rows != 2)
             {
                 return StatusCode(500, "Internal Server Error");
             }
