@@ -5,12 +5,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../competition_page.dart';
 
-class CompetitionInfra extends StatefulWidget {
+class CompetitionSmp extends StatefulWidget {
   @override
-  _CompetitionInfraState createState() => _CompetitionInfraState();
+  _CompetitionSmpState createState() => _CompetitionSmpState();
 }
 
-class _CompetitionInfraState extends State<CompetitionInfra> {
+class _CompetitionSmpState extends State<CompetitionSmp> {
   late String mapUrl = '';
   String token = GlobalToken().token;
   GlobalChampion globalChampion = GlobalChampion();
@@ -48,7 +48,7 @@ class _CompetitionInfraState extends State<CompetitionInfra> {
         child: Column(
           children: <Widget>[
             Text(
-              'Инфраструктура',
+              'SMP',
               style: TextStyle(
                 fontSize: 35,
                 fontWeight: FontWeight.w700,
@@ -60,7 +60,7 @@ class _CompetitionInfraState extends State<CompetitionInfra> {
             Expanded(
               child: Container(
                 child: Image.asset(
-                  'assets/infra_img.png',
+                  'assets/smp_img.png',
                   width: 460,
                   height: 460,
                 ),

@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'competency/competency_experts.dart';
 import 'competency/competency_infra.dart';
 import 'competency/competency_map.dart';
+import 'competency/competency_smp.dart';
 import 'competency/competency_user.dart';
 import 'main.dart';
 
@@ -248,7 +249,7 @@ class CompetencyCriteriaPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CompetitionPage()),
+                    MaterialPageRoute(builder: (context) => CompetitionSmp()),
                   );
                 },
               ),
