@@ -534,3 +534,27 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 <p>BadRequest("Компетенция с таким кодом уже находтся в базе данных")</p>
 <p>StatusCode(500, "Internal Server Error")</p>
 </div>
+
+# Files
+<h1>Download SMP</h1>
+<div>
+<p>Это метод GET</p>
+<p>http://morderboy.ru/api/files/SMP/Download/{champId}&{compCode}</p>
+<p>Нужна авторизация</p>
+<p>Ok() если всё Ok</p>
+<div>
+Вернёт в ответ безумное кол-во битов я их сюда вставлять не буду
+<div>
+<p>NotFound("Файл не найден")</p>
+</div>
+<h1>Download Infrastructure</h1>
+<div>
+<p>Это метод GET</p>
+<p>http://morderboy.ru/api/files/Infrastructure/Download/{champId}&{compCode}</p>
+<p>Нужна авторизация</p>
+<p>Ok() если всё Ok</p>
+<div>
+Вернёт в ответ безумное кол-во битов я их сюда вставлять не буду
+<div>
+<p>NotFound("Файл не найден")</p>
+</div>
