@@ -9,6 +9,7 @@ using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
 using React.AspNet;
 using Backend.Infrastructure.ExportFile;
 using Microsoft.AspNetCore.Hosting;
+using Backend.Infrastructure.VolunteersCSVEngine;
 
 
 namespace Backend.Infrastructure.Extensions
@@ -26,6 +27,7 @@ namespace Backend.Infrastructure.Extensions
             services.AddMyCors();
             services.AddMyReact();
             services.AddFiles();
+            services.AddVolunteersCSVEngine();
 
             return services;
 		}
@@ -105,6 +107,13 @@ namespace Backend.Infrastructure.Extensions
             });
 
             services.AddTransient<IExportFileFactory, ExportFileFactory>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddVolunteersCSVEngine(this IServiceCollection services) 
+        {
+            services.AddScoped<IVolunteersCSV, VolunteersCSV>();
 
             return services;
         }
