@@ -4,6 +4,7 @@ import 'package:wordskills/widgets/custom_competency_button.dart';
 import 'dart:convert';
 
 import 'competency/competency_experts.dart';
+import 'competency/competency_infra.dart';
 import 'competency/competency_map.dart';
 import 'competency/competency_user.dart';
 import 'main.dart';
@@ -228,12 +229,12 @@ class CompetencyCriteriaPage extends StatelessWidget {
                 ),
                 CompetencyButton(
                   image: 'assets/mark.png',
-                  text: 'Инфроструктура',
+                  text: 'Инфраструктура',
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CompetitionPage()),
+                          builder: (context) => CompetitionInfra()),
                     );
                   },
                 ),

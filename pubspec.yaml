@@ -92,6 +92,9 @@ flutter:
     - assets/avatar_users_ex.png
     - assets/map_icon.png
     - assets/map_img.png
+    - assets/infra_img.png
+    - assets/download_icon.png
+    - assets/smp_img.png
 
 
 

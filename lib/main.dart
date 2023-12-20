@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'widgets/custom_button_login_w.dart';
 import 'widgets/custom_button_registration_w.dart';
-import 'forgot_password/forgot_password.dart';
+import 'forgot_user_info/forgot_password.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

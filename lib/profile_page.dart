@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
-import 'package:wordskills/forgot_password/forgot_password.dart';
+import 'package:wordskills/forgot_user_info/forgot_password.dart';
 import 'dart:convert';
 
+import 'forgot_user_info/change_email.dart';
+import 'forgot_user_info/change_name.dart';
 import 'main.dart';
 
+
+class GlobalUserInfo {
+  static final GlobalUserInfo _instance = GlobalUserInfo._internal();
+
+  factory GlobalUserInfo() => _instance;
+
+  GlobalUserInfo._internal();
+
+  String firstName = '';
+  String lastName = '';
+}
 
 Future<Map<String, String>> getName(String token) async {
   if (!GlobalToken().isTokenValid()) {
@@ -22,13 +35,16 @@ Future<Map<String, String>> getName(String token) async {
 
   if (response.statusCode == 200) {
     Map<String, dynamic> data = json.decode(response.body);
-    String name = data['name'];
-    String surname = data['surname'];
+    GlobalUserInfo().firstName = data['name'];
+    GlobalUserInfo().lastName = data['surname'];
     String gender = data['gender'];
+
     return {
-      'name': name,
-      'surname': surname,
+      'name': GlobalUserInfo().firstName,
+      'surname': GlobalUserInfo().lastName,
       'gender': gender,
+
+
     };
   } else if (response.statusCode == 404) {
     throw Exception("У пользователя нет claims");
@@ -60,9 +76,10 @@ class _ProfilePageState extends State<ProfilePage> {
     String token = GlobalToken().token;
     try {
       Map<String, String>? userData = await getName(token);
-      String name = userData['name']!;
+      GlobalUserInfo().firstName = userData['name']!;
       setState(() {
-        userName = name;
+        userName = GlobalUserInfo().firstName;
+
       });
     } catch (e) {
       print('Error fetching user name: $e');
@@ -148,7 +165,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               child: GestureDetector(
                 onTap: () {
-                  _openChangeDataDialog(context, 'Change Email');
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => ChangeEmail()),
+                  );
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -191,8 +211,13 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               child: GestureDetector(
                 onTap: () {
-                  _openChangeDataDialog(context, 'Change Name');
+
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => ChangeName()),
+                  );
                 },
+
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -202,7 +227,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       width: 28,
                       height: 28,
                     ),
+
                     SizedBox(width: 20),
+
                     Text(
                       'Изменить имя',
                       style: TextStyle(
@@ -210,6 +237,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         fontSize: 18,
                       ),
                     ),
+
                   ],
                 ),
               ),
