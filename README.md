@@ -558,3 +558,88 @@ https://yandex.ru/maps/?text=%d0%baA%2c+%d0%bf%d0%be%d1%81%d1%91%d0%bb%d0%be%d0%
 <div>
 <p>NotFound("Файл не найден")</p>
 </div>
+
+# VolunteersMangment
+<h1>Upload Volunteers</h1>
+<div>
+<p>Это метод POST</p>
+<p>http://morderboy.ru/api/VolunteersManagment/uploadvolunteers</p>
+<p>Нужна авторизация от куратора</p>
+<p>Ok() если всё Ok</p>
+<div>
+Необходимо передавать файл в формате .csv
+Передавать необходимо в этом формате "multipart/form-data"
+и в headers это тоже необходимо указать
+<div>
+<p>BadRequest("Передан неверный файл")</p>
+<p>BadRequest("Не удалось загрузить волонтёров из {FileName}")</p>
+<p>StatusCode(500, "Internal Server Error")</p>
+<p>StatusCode(500, "Internal Server Error, Only part of volunteers was uploaded")</p>
+</div>
+<h1>Add Volunteers to competence of champioship</h1>
+<div>
+<p>Это метод PUT</p>
+<p>http://morderboy.ru/api/VolunteersManagment/addtochampcomp/{champId}&{compCode}</p>
+<p>Нужна авторизация от куратора</p>
+<p>Ok() если всё Ok</p>
+<div>
+[1, 2, 3, 4, 5, 10, 11, 23, 105, 44, 55, 66, 77, 88, 99, 101, 22] - сюда необходимо передать список с айдишниками волонтёров которых хотите добавить.
+champId - Id чемпионата.
+compCode - Code компетенции.
+<div>
+<p>BadRequest("Один или несколько идентификаторов указывают на несуществующих волонтёров")</p>
+<p>BadRequest("В системе нет чемпионата с такой компетенцией")</p>
+<p>StatusCode(500, "Internal Server Error")</p>
+<p>StatusCode(500, "Internal Server Error Not All Volunteers was added")</p>
+</div>
+<h1>Get All Volunteers</h1>
+<div>
+<p>Это метод GET</p>
+<p>http://morderboy.ru/api/VolunteersManagment/getvolunteers</p>
+<p>Нужна авторизация от куратора</p>
+<p>Ok() если всё Ok</p>
+<div>
+Вернёт в ответ безумное кол-во волонтёров отсортированных по компетенциям
+<div>
+{
+  "RU": [
+    {
+      "FirstName": "LUCIA",
+      "LastName": "BURCH",
+      "RegionsId": 57,
+      "Regions": null,
+      "Gender": "F",
+      "Id": 1
+    },
+  ]
+  "default": [
+    {
+      "FirstName": "FANNIE",
+      "LastName": "CRONAUER",
+      "RegionsId": 67,
+      "Regions": null,
+      "Gender": "F",
+      "Id": 6
+    }
+  ]
+}
+</div>
+Здесь default - это волонтёры которых ещё не определили ни на одну компетенцию
+<div>
+<p>NotFound("В системе не зарегестрировано ни одного волонтёра")</p>
+</div>
+
+# KuratorsManagment
+<h1>Add to kurators</h1>
+<div>
+<p>Это метод PATCH</p>
+<p>http://morderboy.ru/api/KuratorsManagment/addtokurators</p>
+<p>Нужна авторизация от Админа</p>
+<p>Ok() если всё Ok</p>
+<div>
+[ids] - сюда необходимо передать список с id юзеров которых вы хотите сделать кураторами
+<div>
+<p>BadRequest("Неправильный id: {id}")</p>
+<p>StatusCode(500, "Internail server errror")</p>
+<p>StatusCode(500, "Internail server errror on user with id: {id}")</p>
+</div>
