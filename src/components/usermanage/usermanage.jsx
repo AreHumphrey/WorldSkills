@@ -18,15 +18,26 @@ const UserManage = () => {
   const transformRole = (role) => {
     switch (role) {
       case 'U':
-        return 'user';
+        return 'Пользователь';
       case 'K':
-        return 'coordinator';
+        return 'Координатор';
       case 'A':
-        return 'admin';
+        return 'Администратор';
       case 'E':
-        return 'expert';
+        return 'Эксперт';
       default:
         return 'no role';
+    }
+  };
+
+  const transformGender = (role) => {
+    switch (role) {
+      case 'Male':
+        return 'Мужской';
+      case 'Female':
+        return 'Женский';
+      default:
+        return 'Не указано';
     }
   };
 
@@ -66,17 +77,17 @@ const UserManage = () => {
         <button onClick={handleBackClick}>Назад</button>
       </div>
 
-      <div className='info-block'>
+      <div className='info-block2'>
         <h1>Управление Участниками</h1>
         {UsersInfo.map(user => (
           <div key={user.id} className='info1'>
             <p>Email: {user.Email || ""}</p>
             <p>ID: {user.IdNumber || ""}</p>
-            <p>Role: {transformRole(user.RoleName) || ""}</p>
-            <p>Name: {user.Name || ""}</p>
-            <p>Gender: {user.Gender || ""}</p>
-            <p>Region: {user.Region || ""}</p>
-            <p>Area: {user.Area || ""}</p>
+            <p>Роль: {transformRole(user.RoleName) || ""}</p>
+            <p>ФИО: {user.Name || ""}</p>
+            <p>Пол: {transformGender(user.Gender) || ""}</p>
+            <p>Город: {user.Region || ""}</p>
+            <p>Регион: {user.Area || ""}</p>
             <button id='btn_add'>Добавить в чемпионат</button>
           </div>
         ))}

@@ -143,64 +143,64 @@ const Championships = () => {
             </div>
 
             <div className='add_championship_block'>
-                <h1>Add Championship</h1>
-                <label>Title:</label>
+                <h1>Добавить чемпионат</h1>
+                <label>Название:</label>
                 <input type='text' name='title' value={newChampionship.title} onChange={handleInputChange} />
 
-                <label>Dates:</label>
+                <label>Даты:</label>
                 <input type='text' name='dates' value={newChampionship.dates} onChange={handleInputChange} />
 
-                <label>Place:</label>
+                <label>Местоположение:</label>
                 <input type='text' name='place' value={newChampionship.place} onChange={handleInputChange} />
 
-                <label>Link:</label>
+                <label>Ссылка:</label>
                 <input type='text' name='link' value={newChampionship.link} onChange={handleInputChange} />
 
-                <label>Address:</label>
+                <label>Адрес:</label>
                 <input type='text' name='address' value={newChampionship.address} onChange={handleInputChange} />
 
-                <button onClick={handleAddChampionship}>Add Championship</button>
+                <button onClick={handleAddChampionship}>Добавить чемпионат</button>
             </div>
 
-            <h1 id='title1'>Управление Чемпионатами</h1>
-            <div className='info-block'>
+            <h1 id='title1'>Управление чемпионатами</h1>
+            <div className='info-block3'>
                 <h1>Предстоящие</h1>
                 {UpcomingChamps.map(champ => (
                     <div key={champ.id} className='info1'>
-                        <p>Title: {champ.Title || ""}</p>
+                        <p>Название: {champ.Title || ""}</p>
                         <p>ID: {champ.Id || ""}</p>
-                        <p>Dates: {champ.Dates || ""}</p>
-                        <p>Members: {champ.Members_count || ""}</p>
-                        <p>Adress: {champ.Adress || ""}</p>
-                        <p>Place: {champ.Place || ""}</p>
+                        <p>Даты: {champ.Dates || ""}</p>
+                        <p>Количество участников: {champ.Members_count || ""}</p>
+                        <p>Адрес: {champ.Adress || ""}</p>
+                        <p>Местоположение: {champ.Place || ""}</p>
                     </div>
                 ))}
             </div>
 
-            <div className='info-block'>
+            <div className='info-block3'>
                 <h1>Текущие</h1>
                 {CurrentChamps.map(champ => (
                     <div key={champ.id} className='info1'>
-                        <p>Title: {champ.Title || ""}</p>
+                        <p>Название: {champ.Title || ""}</p>
                         <p>ID: {champ.Id || ""}</p>
-                        <p>Dates: {champ.Dates || ""}</p>
-                        <p>Members: {champ.Members_count || ""}</p>
-                        <p>Adress: {champ.Adress || ""}</p>
-                        <p>Place: {champ.Place || ""}</p>
+                        <p>Даты: {champ.Dates || ""}</p>
+                        <p>Количество участников: {champ.Members_count || ""}</p>
+                        <p>Адрес: {champ.Adress || ""}</p>
+                        <p>Местоположение: {champ.Place || ""}</p>
                     </div>
                 ))}
             </div>
 
-            <div className='info-block'>
+            <div className='info-block3'>
                 <h1>Прошедшие</h1>
                 {PassedChamps.map(champ => (
                     <div key={champ.id} className='info1'>
-                        <p>Title: {champ.Title || ""}</p>
+                        <p>Название: {champ.Title || ""}</p>
                         <p>ID: {champ.Id || ""}</p>
-                        <p>Dates: {champ.Dates || ""}</p>
-                        <p>Members: {champ.Members_count || ""}</p>
-                        <p>Adress: {champ.Adress || ""}</p>
-                        <p>Place: {champ.Place || ""}</p>
+                        <p>Даты: {champ.Dates || ""}</p>
+                        <p>Количество участников: {champ.Members_count || ""}</p>
+                        <p>Адрес: {champ.Adress || ""}</p>
+                        <p>Местоположение: {champ.Place || ""}</p>
                     </div>
                 ))}
             </div>

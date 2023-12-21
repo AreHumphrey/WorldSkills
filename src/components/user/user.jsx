@@ -46,6 +46,10 @@ const User = () => {
     navigate('/championships', { state: { token } });
   };
 
+  const handleMyCompClick = () => {
+    navigate('/comp', { state: { token } });
+  };
+
 
   useEffect(() => {
     const fetchUsername = async () => {
@@ -119,7 +123,7 @@ const User = () => {
             Ms/Mrs {username}!</p>
           <div className='control_btns'>
             <button onClick={handleMyProfileClick}>Мой профиль</button><br></br>
-            <button id='btn_competention'>Моя компетенция</button><br></br>
+            <button onClick={handleMyCompClick}>Моя компетенция</button><br></br>
             <button onClick={handleMyResultClick}>Мои результаты</button>
           </div>
         </div>

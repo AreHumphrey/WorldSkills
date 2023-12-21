@@ -10,6 +10,66 @@ const Myprofile = () => {
 
   const navigate = useNavigate();
 
+  const [newEmail, setNewEmail] = useState('');
+  const [emailChanged, setEmailChanged] = useState(false);
+  const [currentEmail, setCurrentEmail] = useState('');
+
+  const [newPassword, setNewPassword] = useState('');
+  const [passwordChanged, setPasswordChanged] = useState(false);
+
+  const handleChangePassword = async () => {
+    try {
+      const response = await fetch('http://morderboy.ru/api/changepassword', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ email: currentEmail, password: newPassword })
+      });
+
+      if (response.ok) {
+        setPasswordChanged(true);
+        setNewPassword('');
+        setCurrentEmail('');
+      } else if (response.status === 400) {
+        throw new Error('Пользователь найден, но обновление данных в БД не удалось');
+      } else if (response.status === 404) {
+        throw new Error('Пользователь с такой почтой не зарегистрирован');
+      } else {
+        throw new Error('Произошла ошибка');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleChangeEmail = async () => {
+    try {
+      const response = await fetch('http://morderboy.ru/api/changeemail', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}` 
+        },
+        body: JSON.stringify({ email: newEmail })
+      });
+
+      if (response.ok) {
+        setEmailChanged(true);
+        setNewEmail('');
+      } else if (response.status === 404) {
+        throw new Error('Пользователь не найден в системе');
+      } else if (response.status === 500) {
+        throw new Error('Internal Server Error');
+      } else {
+        throw new Error('Произошла ошибка');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   const handleBackClick = () => {
     navigate('/user', { state: { token } });
@@ -53,14 +113,44 @@ const Myprofile = () => {
 
         <div className='info-block'>
             <h1>Мой Профиль</h1>
-            <div className='info1'>
-                <p>ID: {profileInfo.IdNumber || ""}</p>
-                <p>Name: {profileInfo.Name || ""}</p>
-                <p>Gender: {profileInfo.Gender || ""}</p>
-                <p>Region: {profileInfo.Region || ""}</p>
-                <p>Area: {profileInfo.Area || ""}</p>
-            </div>
+              <div className='info1'>
+                <div className='in'>
+                  <p>ID: {profileInfo.IdNumber || ""}</p>
+                  <p>ФИО: {profileInfo.Name || ""}</p>
+                  <p>Пол: {profileInfo.Gender || ""}</p>
+                  <p>Город: {profileInfo.Region || ""}</p>
+                  <p>Регион: {profileInfo.Area || ""}</p>
+                </div>
+                <div className='change'>
+                  <h2>Смена Email</h2>
+                  <input
+                    type="email"
+                    value={newEmail}
+                    onChange={(e) => setNewEmail(e.target.value)}
+                    placeholder="Enter new email"
+                  />
+                  <button onClick={handleChangeEmail}>Изменить Email</button>
+                  <h2>Смена Пароля</h2>
+                  <input
+                    type="email"
+                    value={currentEmail}
+                    onChange={(e) => setCurrentEmail(e.target.value)}
+                    placeholder="Enter current email"
+                  />
+                  <input
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="Enter new password"
+                  />
+                  <button onClick={handleChangePassword}>Изменить Пароль</button>
+                </div>
+              </div>
+              
         </div>
+        {passwordChanged && <p className="success-message">Пароль успешно изменён!</p>}
+        {emailChanged && <p className="success-message">Email успешно изменён!</p>}
+        
     </div>
   );
 }

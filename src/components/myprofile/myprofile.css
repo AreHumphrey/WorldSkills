@@ -3,14 +3,13 @@
     background-size: 1490px 160px;
     background-position: center top;
     background-repeat: no-repeat;
-    padding: 0 0 60px;
     text-align: center;
 }
 
 .user_row1 {
     display: flex;
     justify-content: space-between;
-    padding: 0 0 100px;
+    padding: 0 0 50px;
 }
 
 .user_logo1 img {
@@ -47,8 +46,10 @@
     border: 1px solid #ccc;
     background-color: #dbdbdb;
     border-radius: 5px;
-    text-align: left;
     font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 .info-block h1 {
@@ -61,3 +62,54 @@
 .info1 p {
     padding: 10px ;
 }
+
+.info1 .change {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.info1 .change h2 {
+    padding: 0 0 15px;
+}
+
+.info1 .change input[type="email"] {
+    background-color: #f4f3f3;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    color: #030303;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+
+  .info1 .change input[type="password"] {
+    background-color: #f4f3f3;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    color: #030303;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .info1 .change button {
+    padding: 5px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 15px;
+  }
+  
+  .info1 .change button:focus {
+    outline: none;
+  }
+  
+  .success-message {
+    color: rgb(9, 55, 124);
+    margin-top: 10px;
+  }
+
+  .in {
+    margin-top: 30px;
+    text-align: left;
+  }
