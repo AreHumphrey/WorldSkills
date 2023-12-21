@@ -75,6 +75,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'flutterflux.com',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         backgroundColor: Color(0xFFE5E9EA),
         primaryColor: Colors.deepPurple,
@@ -267,12 +268,17 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
             SizedBox(height: 40),
-            CustomButtonLogin(
-              onPressed: () {
-                _loginUser(username, password);
-              },
-              text: 'Войти',
+            Center(
+              child:
+              CustomButtonLogin(
+                onPressed: () {
+                  _loginUser(username, password);
+                },
+                text: 'Войти',
+              ),
+
             ),
+
             SizedBox(height: 50),
             TextButton(
               onPressed: () {

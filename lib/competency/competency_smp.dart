@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:wordskills/main.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../competition_page.dart';
 
@@ -15,26 +18,36 @@ class _CompetitionSmpState extends State<CompetitionSmp> {
   String token = GlobalToken().token;
   GlobalChampion globalChampion = GlobalChampion();
 
-  Future<void> fetchMapUrl() async {
-    final url = Uri.parse(
-        'http://morderboy.ru/api/championships/link/${globalChampion.championshipId}');
-    final response = await http.get(
-      url,
-      headers: {'Authorization': 'Bearer $token'},
-    );
+  void downloadExcelFiles() async {
+    String url = 'http://morderboy.ru/api/files/SMP/Download/${GlobalChampion().championshipId}&${GlobalChampion().competenceId}';
 
-    if (response.statusCode == 200) {
-      String responseData = response.body;
+    Map<String, String> headers = {
+      'Authorization': 'Bearer ${GlobalToken().token}',
+    };
 
-      await launch(responseData);
-    } else if (response.statusCode == 404) {
-      print('Чемпионат не найден в базе данных');
-    } else if (response.statusCode == 400) {
-      print('У данного чемпионата отсутствует адрес');
-    } else {
-      print('Произошла ошибка: ${response.reasonPhrase}');
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: headers);
+
+      if (response.statusCode == 200) {
+
+        final bytes = response.bodyBytes;
+        final fileName = 'downloaded_file.pdf';
+        String dir = (await getTemporaryDirectory()).path;
+        String filePath = '$dir/$fileName';
+        File file = File(filePath);
+        await file.writeAsBytes(bytes);
+
+        OpenFile.open(filePath);
+      } else if (response.statusCode == 404) {
+        print('Файл не найден');
+      } else {
+        print('Ошибка при скачивании файла: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Ошибка при выполнении запроса: $error');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +87,7 @@ class _CompetitionSmpState extends State<CompetitionSmp> {
                 height: 240,
               ),
               onPressed: () {
-                fetchMapUrl();
+                downloadExcelFiles();
               },
             ),
             SizedBox(height: 20),

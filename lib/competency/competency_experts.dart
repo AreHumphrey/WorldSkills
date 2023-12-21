@@ -14,10 +14,10 @@ class _CompetitionUserState extends State<CompetitionExperts> {
   String token = GlobalToken().token;
   GlobalChampion globalChampion = GlobalChampion();
 
-
   Future<List<Map<String, dynamic>>> fetchUsers() async {
     final response = await http.get(
-      Uri.parse('http://morderboy.ru/api/champcompetence/experts/${globalChampion.championshipId}&${globalChampion.competenceId}'),
+      Uri.parse(
+          'http://morderboy.ru/api/champcompetence/experts/${globalChampion.championshipId}&${globalChampion.competenceId}'),
       headers: {'Authorization': 'Bearer $token'},
     );
 
@@ -35,12 +35,19 @@ class _CompetitionUserState extends State<CompetitionExperts> {
   }
 
   @override
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Эксперты'),
+        title: Text(
+          'Эксперты',
+          style: TextStyle(
+            color: Color(0xFFFFFFFF),
+          ),
+        ),
+        backgroundColor: Color(0xFF003764),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
+      backgroundColor: Color(0xFF003764),
       body: Padding(
         padding: const EdgeInsets.all(18.0),
         child: FutureBuilder<List<Map<String, dynamic>>>(
@@ -57,7 +64,7 @@ class _CompetitionUserState extends State<CompetitionExperts> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 30,
                   mainAxisSpacing: 35,
-                  childAspectRatio: 109/162,
+                  childAspectRatio: 109 / 162,
                 ),
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
@@ -79,9 +86,7 @@ class _CompetitionUserState extends State<CompetitionExperts> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-
                         SizedBox(height: 20),
-
                         Center(
                           child: Image.asset(
                             'assets/avatar_users_ex.png',
@@ -89,20 +94,34 @@ class _CompetitionUserState extends State<CompetitionExperts> {
                             height: 100,
                           ),
                         ),
-
                         SizedBox(height: 10),
 
-                        Text(
-                          '${user?['FirstName'] ?? 'Unknown'} ${user?['LastName'] ?? 'Unknown'}',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromRGBO(82, 82, 82, 1),
-                            fontSize: 16,
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                '${user?['FirstName'] ?? 'Unknown'}\n',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(82, 82, 82, 1),
+                                  fontSize: 16,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              Text(
+                                '${user?['LastName'] ?? 'Unknown'}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(82, 82, 82, 1),
+                                  fontSize: 16,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
                         ),
-
-                        SizedBox(height: 3),
-
+                        SizedBox(height: 4),
                         Text(
                           '${user?['Regionname'] ?? 'Unknown'}',
                           style: TextStyle(
@@ -124,8 +143,4 @@ class _CompetitionUserState extends State<CompetitionExperts> {
       ),
     );
   }
-
-
 }
-
-

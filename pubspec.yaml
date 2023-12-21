@@ -32,6 +32,8 @@ dependencies:
   flutter_svg: ^0.22.0
   webview_flutter: ^2.0.13
   url_launcher: ^6.2.2
+  open_file: ^3.0.1
+  path_provider: ^2.0.2
 
 
 
@@ -76,6 +78,8 @@ flutter:
     - assets/person.svg
     - assets/mail.svg
     - assets/blue_logo.svg
+    - assets/icon_main.png
+    - assets/icon_wh.png
     - assets/WS_Logo_DarkBlue_RGB.png
     - assets/worldskills_rus_info.jpg
     - assets/worldskills_info.jpg
@@ -95,6 +99,8 @@ flutter:
     - assets/infra_img.png
     - assets/download_icon.png
     - assets/smp_img.png
+    - assets/w_info.png
+    - assets/m_info.png
 
 
 

@@ -89,7 +89,7 @@ class ChangeName extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 70),
+                  SizedBox(height: 120),
                   ElevatedButton(
                     onPressed: () {
                       String token = GlobalToken().token;

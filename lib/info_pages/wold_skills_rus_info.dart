@@ -9,26 +9,24 @@ class WorldSkills_Page_Rus extends StatelessWidget {
       appBar: AppBar(
 
       ),
-      body: Center(
+      body: Align(
+        alignment: Alignment.topCenter,
         child: Stack(
-          alignment: Alignment.center,
           children: <Widget>[
-            Positioned(
-              top: 30,
-              child: Text(
-                'WorldSkills Russia',
-                style: TextStyle(
-                  fontSize: 35,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF003764),
-                ),
-              ),
-            ),
+
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
 
-                SizedBox(height: 60),
+                Container(
+                  child: Image.asset(
+                    'assets/w_info.png',
+                    width: 430,
+                    height: 430,
+                  ),
+                ),
+
+
 
                 GestureDetector(
                   onTap: () {
@@ -48,7 +46,7 @@ class WorldSkills_Page_Rus extends StatelessWidget {
                       child: Text(
                         'О WorldSkills Russia',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 25,
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
                         ),
@@ -59,7 +57,7 @@ class WorldSkills_Page_Rus extends StatelessWidget {
                 ),
 
 
-                SizedBox(height: 80),
+                SizedBox(height: 40),
 
 
                 GestureDetector(
@@ -80,7 +78,7 @@ class WorldSkills_Page_Rus extends StatelessWidget {
                       child: Text(
                         'Цели и задачи',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 25,
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
                         ),
@@ -91,7 +89,7 @@ class WorldSkills_Page_Rus extends StatelessWidget {
                 ),
 
 
-                SizedBox(height: 80),
+
 
 
               ],
