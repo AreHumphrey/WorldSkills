@@ -37,11 +37,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
 
           Positioned(
-            bottom: 10,
+            bottom: 0,
             left: 0,
             right: 0,
             child: Container(
-              height: 75,
+              height: 70,
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
