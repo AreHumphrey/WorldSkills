@@ -172,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     contentPadding:
-                        EdgeInsets.only(left: 20, top: 20, bottom: 20),
+                    EdgeInsets.only(left: 20, top: 20, bottom: 20),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.blue, width: 2.0),
                       borderRadius: BorderRadius.circular(8.0),
@@ -212,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     contentPadding:
-                        EdgeInsets.only(left: 20, top: 20, bottom: 20),
+                    EdgeInsets.only(left: 20, top: 20, bottom: 20),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.blue, width: 2.0),
                       borderRadius: BorderRadius.circular(8.0),
@@ -308,7 +308,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _loginUser(String username, String password) async {
     String? result = await ApiService.loginUser(username, password);
-    if (result != null) {
+    if (result != 'NotFound' && result != null) {
       DateTime tokenExpiration = DateTime.now().add(Duration(hours: 24));
       GlobalToken().setToken(result, tokenExpiration);
       Navigator.pushReplacement(

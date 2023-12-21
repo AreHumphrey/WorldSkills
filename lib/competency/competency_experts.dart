@@ -86,7 +86,9 @@ class _CompetitionUserState extends State<CompetitionExperts> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
+
                         SizedBox(height: 20),
+
                         Center(
                           child: Image.asset(
                             'assets/avatar_users_ex.png',
@@ -100,8 +102,9 @@ class _CompetitionUserState extends State<CompetitionExperts> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
+
                               Text(
-                                '${user?['FirstName'] ?? 'Unknown'}\n',
+                                '${user?['FirstName'] ?? 'Unknown'}',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Color.fromRGBO(82, 82, 82, 1),
@@ -109,6 +112,7 @@ class _CompetitionUserState extends State<CompetitionExperts> {
                                 ),
                                 textAlign: TextAlign.center,
                               ),
+
                               Text(
                                 '${user?['LastName'] ?? 'Unknown'}',
                                 style: TextStyle(
@@ -121,7 +125,9 @@ class _CompetitionUserState extends State<CompetitionExperts> {
                             ],
                           ),
                         ),
+
                         SizedBox(height: 4),
+
                         Text(
                           '${user?['Regionname'] ?? 'Unknown'}',
                           style: TextStyle(
