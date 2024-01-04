@@ -1,0 +1,114 @@
+.container_profile1 {
+    background-image: url('./../../img/Group\ 1.png');
+    background-size: 1490px 160px;
+    background-position: center top;
+    background-repeat: no-repeat;
+    padding: 0 0 60px;
+    text-align: center;
+}
+
+.container_profile1 #title1 {
+    font-size: 30px;
+    padding-bottom: 30px;
+}
+
+.user_row1 {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0 100px;
+}
+
+.user_logo1 img {
+    width: 108px;
+    height: 108px;
+    margin-left: 36px;
+    margin-top: 14px;
+}
+
+.user_row1 h1 {
+    color: white;
+    font-size: 53px;
+    font-family: Inter;
+    font-weight: 400;
+    margin-right: 10px;
+    margin-top: 26px;
+}
+
+.user_row1 button {
+    color: white;
+    font-size: 20px;
+    margin-right: 150px;
+}
+
+.user_row1 button:hover {
+    color: rgba(155, 155, 155, 0.9);
+}
+
+.info-block3 .info1 {
+    margin-left: 150px;
+    margin-right: 150px;
+    margin-bottom: 20px;
+    padding: 30px;
+    border: 1px solid #ccc;
+    background-color: #dbdbdb;
+    border-radius: 5px;
+    text-align: left;
+    font-size: 20px;
+}
+
+.info-block3 h1 {
+    text-align: left;
+    font-size: 25px;
+    font-weight: 600;
+    padding: 0 190px 25px;
+}
+
+.info1 p {
+    padding: 10px;
+}
+
+/* Styles for the main container */
+.add_championship_block {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styles for the heading */
+  .add_championship_block h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Styles for labels */
+  .add_championship_block label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  /* Styles for input fields */
+  .add_championship_block input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styles for the button */
+  .add_championship_block button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add_championship_block button:hover {
+    background-color: #0056b3;
+  }
+  

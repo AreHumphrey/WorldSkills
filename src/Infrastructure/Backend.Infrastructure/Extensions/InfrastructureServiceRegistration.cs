@@ -10,6 +10,7 @@ using React.AspNet;
 using Backend.Infrastructure.ExportFile;
 using Microsoft.AspNetCore.Hosting;
 using Backend.Infrastructure.VolunteersCSVEngine;
+using Microsoft.Extensions.Logging;
 
 
 namespace Backend.Infrastructure.Extensions
@@ -70,10 +71,11 @@ namespace Backend.Infrastructure.Extensions
             services.AddCors(options =>
             options.AddPolicy("AllAllow", policy =>
             {
-                policy.AllowAnyHeader()
+                policy.WithOrigins("http://localhost:3000",
+                                   "http://localhost:5125",
+                                   "http://morderboy.ru/")
+                      .AllowAnyHeader()
                       .AllowAnyMethod()
-                      .WithOrigins("http://localhost:3000",
-                                   "https://morderboy.ru/")
                       .AllowCredentials();
             })
             );

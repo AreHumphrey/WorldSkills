@@ -1,6 +1,7 @@
 using Backend.Application.Extensions;
 using Backend.Infrastructure.Extensions;
 using Backend.Persistence.Extensions;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using React.AspNet;
 
 var builder = WebApplication.CreateBuilder();
@@ -17,26 +18,34 @@ builder.Services.AddSwaggerGen();
 
 
 var app = builder.Build();
-app.UseReact(config => { });
-
-// Configure the HTTP request pipeline.
-app.UseDefaultFiles();
-app.UseStaticFiles();
-
-if (app.Environment.IsDevelopment())
-{
-	app.UseSwagger();
-	app.UseSwaggerUI();
-}
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllAllow");
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+app.UseRouting();
 
 app.UseAuthentication();
-
 app.UseAuthorization();
 
+app.UseCors("AllAllow");
+
 app.MapControllers();
+
+app.UseSpa(spa =>
+{
+    spa.Options.SourcePath = "wwwroot"; // указываем путь к папке с клиентским приложением
+    if (app.Environment.IsDevelopment())
+    {
+        spa.UseReactDevelopmentServer("start");
+    }
+});
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.Run();

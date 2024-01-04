@@ -1,0 +1,129 @@
+.container_profile1 .comp {
+    padding: 0 540px 0;
+}
+
+.container_profile1 .comp p {
+    font-size: 27px;
+    background-color: rgb(200, 0, 0);
+    border-radius: 9px;
+    color: aliceblue;
+    margin-bottom: 10px;
+}
+
+.container_profile1 .comp p1 {
+    font-size: 20px;
+} 
+
+.display_container img {
+    width: 120px;
+    height: auto;
+    border-radius: 4px;
+    padding: 0 0 10px;
+}
+
+.display_container {
+    margin-top: 50px;
+    margin-left: 350px;
+    margin-right: 350px;
+}
+
+.display_container ul {
+    list-style: none;
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+}
+
+.display_container ul li.blant {
+    background-color: #dbdbdb;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.category_container {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.category_container button {
+    padding: 8px 16px;
+    margin: 4px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    color: #333333;
+    cursor: pointer;
+}
+
+.category_container button.selected {
+    background-color: gray;
+    color: white;
+}
+
+.category_container p {
+    text-align: center;
+    color: #333333;
+}
+
+.plan-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .plan-link img {
+    width: 100px;
+    height: auto;
+  }
+  
+  .plan-link a {
+    text-decoration: none;
+    color: #000;
+    font-size: 16px;
+  }
+
+  .smp-link, .infrastructure-link {
+    margin-top: 20px;
+  }
+  
+  .infrastructure-link p {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .infrastructure-link a {
+    display: inline-block;
+    padding: 10px;
+    background-color: #0a59ad;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  
+  .infrastructure-link a:hover {
+    background-color: #2674c7;
+  }
+  
+  .smp-link p {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .smp-link a {
+    display: inline-block;
+    padding: 10px;
+    background-color:#0a59ad;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  
+  .smp-link a:hover {
+    background-color: #2674c7;
+  }
+  

@@ -1,0 +1,37 @@
+.results-container {
+    text-align: left;
+    margin-left: 150px;
+    margin-right: 150px;
+    margin-bottom: 20px;
+    padding: 30px;
+    border: 1px solid #ccc;
+    background-color: #dbdbdb;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.result-item:not(:last-child) {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgb(0, 80, 150);
+  }
+
+.container_profile1 .N {
+    text-align: left;
+    font-size: 33px;
+    font-weight: 600;
+    padding: 0 180px 25px;
+}
+
+.container_profile1 .result-item p:first-child {
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .result-item p:last-child {
+    font-weight: 500;
+    color: rgb(186, 3, 3);
+  }
+
+
